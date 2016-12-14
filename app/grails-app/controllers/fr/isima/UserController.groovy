@@ -2,7 +2,7 @@ package fr.isima
 
 class UserController {
 
-    def scaffold = User
+    static scaffold = User
 
-    def index() { }
+    
 }
