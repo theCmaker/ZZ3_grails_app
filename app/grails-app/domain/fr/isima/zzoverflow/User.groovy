@@ -18,6 +18,8 @@ class User implements Serializable {
 	boolean accountLocked
 	boolean passwordExpired
 
+	static hasMany = [ answers: Answer, questions: Question ]
+
 	Set<Group> getAuthorities() {
 		UserGroup.findAllByUser(this)*.group
 	}
@@ -41,6 +43,8 @@ class User implements Serializable {
 	static constraints = {
 		password blank: false, password: true
 		username blank: false, unique: true
+
+		
 	}
 
 	static mapping = {
