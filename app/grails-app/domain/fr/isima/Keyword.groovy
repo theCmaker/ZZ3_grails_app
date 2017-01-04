@@ -2,12 +2,13 @@ package fr.isima
 
 class Keyword {
 
-    String value
+    String name
 
     // Many to many with a question
     static hasMany = [ questions : Question ]
-    static belongsTo = Question
+    static belongsTo = [ Question ]
 
     static constraints = {
+        name blank: false, unique: true
     }
 }

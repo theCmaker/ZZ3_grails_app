@@ -2,9 +2,11 @@ package fr.isima
 
 class Answer {
 
-    // Many to many with Topic
-    // static belongsTo = [ topic : Topic ]
+    /// The answer is accepted
+    boolean accepted = false
 
+    static belongsTo = [ question: Question, user: User ]
+    
     static constraints = {
     }
 }

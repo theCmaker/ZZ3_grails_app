@@ -11,7 +11,7 @@ class User {
     Date birthDate
 
     static constraints = {
-        mailAddress email:true
+        mailAddress blank: false, email:true
         userName blank: false, size: 5..15, unique: true
         password blank: false, password: true
 
