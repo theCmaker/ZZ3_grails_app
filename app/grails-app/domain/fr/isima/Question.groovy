@@ -7,10 +7,11 @@ class Question {
     String title
 
     // Many to many keywords
-    // static hasMany = [ tags: Keyword[] ]
+    static hasMany = [ tags: Keyword, answers: Answer ]
 
-    // One to one Topic
-    // static belongsTo = [ topic: Topic ]
+    
+
+    static belongsTo = [ user: User ]
 
     static constraints = {
     }
