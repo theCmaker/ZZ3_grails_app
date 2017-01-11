@@ -79,6 +79,7 @@ class AnswerController {
         }
 
         answer.save flush:true
+        redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
     }
 
     @Transactional
