@@ -49,13 +49,30 @@
 
             </div>
 
-            <g:form resource="${this.question}" method="DELETE">
-                <fieldset class="buttons">
-                    <g:link class="edit" action="edit" resource="${this.question}">
-                        <g:message code="default.button.edit.label" default="Edit" /></g:link>
+            <!--This is an empty question to answer-->
+            <sec:ifLoggedIn>
+                <div class="create answer question">
+                    <div class="answer">
+                        <g:include controller="answer" action="create" />
+                    </div>
+                </div>
+            </sec:ifLoggedIn>
+
+<sec:ifAnyGranted roles='ROLE_ADMIN'>
+                    TPTPAR
+                </sec:ifAnyGranted>
+
+            <sec:ifLoggedIn>
+                    <g:form resource="${this.question}" method="DELETE">
+                        <fieldset class="buttons">
+                            <g:link class="edit" action="edit" resource="${this.question}"> <g:message code="default.button.edit.label" default="Edit" /> </g:link>
+                <sec:ifAnyGranted roles='ROLE_ADMIN'>
+                    TPTPAR
+                </sec:ifAnyGranted>
                     <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-</fieldset>
-</g:form>
+                </fieldset>
+                </g:form>
+            </sec:ifLoggedIn>
 </div>
 </body>
 

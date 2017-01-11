@@ -5,6 +5,7 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class QuestionController {
+    def springSecurityService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 

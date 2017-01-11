@@ -32,6 +32,8 @@ class AnswerController {
         // Get the user from the current session
         answer.user = User.get(springSecurityService.currentUser.id)
 
+        println "${authenticatedUser.getAuthorities()}"
+
         // Send to the _create view
         respond answer, view: '_create'
     }
