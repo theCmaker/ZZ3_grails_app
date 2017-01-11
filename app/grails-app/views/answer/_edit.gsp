@@ -1,4 +1,4 @@
-<div id="edit-answer" class="content scaffold-edit" role="main">
+<div id="edit-answer" class="content scaffold-edit answer" role="main">
 
     <g:form resource="${this.answer}" method="PUT">
         <g:hiddenField name="version" value="${this.answer?.version}" />

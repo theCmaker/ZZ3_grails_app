@@ -1,4 +1,4 @@
-<div id="create-answer" class="content scaffold-create" role="main">
+<div id="create-answer" class="content scaffold-create answer" role="main">
     <g:form action="save">
 
         <!--Answer content-->

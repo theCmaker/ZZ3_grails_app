@@ -12,27 +12,19 @@ class AnswerController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    /*
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Answer.list(params), model:[answerCount: Answer.count()]
-    }
-    */
-
+    // This method is used to view the answer and
+    // - edit it for the user that created it
+    // - delete only for admins
     def show(Answer answer) {
-        respond answer
+        respond answer, view: '_show'
     }
 
     def create() {
-
-        println "Creating a new answer"
-
         // Create a new answer
         def answer = new Answer()
 
         // Initialize the answer fields with only the content 
         bindData(answer, params, [include: 'content'])
-        
 
         // Get the question from the request param
         answer.question = Question.get(params.id)
@@ -47,46 +39,31 @@ class AnswerController {
     @Transactional
     def save(Answer answer) {
 
-        println "Saving the answer"
-
         if (answer == null) {
-            println "Answer is null"
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        // answer.accepted = answer.accepted
-
-        answer.validate()
-
-        println "User id  ${}"
-
-        println "${answer.user} ${answer.content} ${answer.question.title} ${answer.accepted}"
-
         if (!answer.validate()) {
-            println "Error with answer"
-
             transactionStatus.setRollbackOnly()
             respond answer.errors, view:'_create'
             return
         }
 
+        // Save the new answer
         answer.save(flush:true, failOnError: true)
-
-        // request.withFormat {
-        //     form multipartForm {
-        //         flash.message = message(code: 'default.created.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
-        //         redirect answer
-        //     }
-        //     '*' { respond answer, [status: CREATED] }
-        // }
+        
+        // Redirect to the question show view
+        redirect action:'show', controller: 'question', method: 'GET', params: [id: answer.question.id]
     }
 
+    // Enables the user that created it to edit the content ONLY
     def edit(Answer answer) {
         respond answer, view: '_edit'
     }
 
+    // Called to update an existing answer
     @Transactional
     def update(Answer answer) {
         if (answer == null) {
@@ -95,21 +72,13 @@ class AnswerController {
             return
         }
 
-        if (answer.hasErrors()) {
+        if (!answer.validate()) {
             transactionStatus.setRollbackOnly()
-            respond answer.errors, view:'edit'
+            respond answer.errors, view:'_edit'
             return
         }
 
         answer.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
-                redirect answer
-            }
-            '*'{ respond answer, [status: OK] }
-        }
     }
 
     @Transactional
