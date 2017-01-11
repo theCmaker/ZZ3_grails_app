@@ -12,10 +12,12 @@ class AnswerController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    /*
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Answer.list(params), model:[answerCount: Answer.count()]
     }
+    */
 
     def show(Answer answer) {
         respond answer
@@ -23,53 +25,66 @@ class AnswerController {
 
     def create() {
 
-        // Create the view model
-        // def model = [ content: Answer.content ]
+        println "Creating a new answer"
 
-        // Use the template view for the answer
-        def answer = new Answer(params)
+        // Create a new answer
+        def answer = new Answer()
+
+        // Initialize the answer fields with only the content 
+        bindData(answer, params, [include: 'content'])
+        
+
+        // Get the question from the request param
         answer.question = Question.get(params.id)
+
+        // Get the user from the current session
         answer.user = User.get(springSecurityService.currentUser.id)
 
+        // Send to the _create view
         respond answer, view: '_create'
     }
 
     @Transactional
     def save(Answer answer) {
+
+        println "Saving the answer"
+
         if (answer == null) {
+            println "Answer is null"
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        answer.accepted = answer.accepted;
+        // answer.accepted = answer.accepted
 
-        answer.validate();
+        answer.validate()
 
         println "User id  ${}"
 
-        println "${answer.user} ${answer.content} ${answer.question.title}"
+        println "${answer.user} ${answer.content} ${answer.question.title} ${answer.accepted}"
 
-        if (answer.hasErrors()) {
+        if (!answer.validate()) {
+            println "Error with answer"
+
             transactionStatus.setRollbackOnly()
             respond answer.errors, view:'_create'
             return
         }
-        println "Hello" + answer.errors.allErrors
 
         answer.save(flush:true, failOnError: true)
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
-                redirect answer
-            }
-            '*' { respond answer, [status: CREATED] }
-        }
+        // request.withFormat {
+        //     form multipartForm {
+        //         flash.message = message(code: 'default.created.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
+        //         redirect answer
+        //     }
+        //     '*' { respond answer, [status: CREATED] }
+        // }
     }
 
     def edit(Answer answer) {
-        respond answer
+        respond answer, view: '_edit'
     }
 
     @Transactional

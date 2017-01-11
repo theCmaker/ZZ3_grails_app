@@ -2,7 +2,7 @@ package fr.isima.zzoverflow
 
 class Answer {
 
-    /// The answer is accepted
+    /// The answer is accepted or not
     boolean accepted = false
 
     String content
