@@ -16,6 +16,20 @@
                     <g:message code="default.button.edit.label" default="Edit" />
                 </g:link>
 
+                <!--If the answer is accepted, display revoke-->
+                <g:if test="${answer.accepted}">
+                    <button class="btn btn-danger">
+                        ${message(code: 'default.answer.revoke', default: 'Bad')}
+                    </button>
+                </g:if>
+                <g:else>
+                    <button class="btn btn-success">
+                        ${message(code: 'default.answer.accept', default: 'Good')}
+                    </button>
+                </g:else>
+
+
+
                 <g:form resource="${this.answer}" method="DELETE">
                     <sec:ifAnyGranted roles="ROLE_ADMIN">
                         <input class="delete btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />

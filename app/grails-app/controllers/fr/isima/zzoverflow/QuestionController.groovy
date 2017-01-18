@@ -29,6 +29,9 @@ class QuestionController {
 
         bindData(question, params, [include: ['title', 'content']])
 
+        // We get the user now
+        question.user = User.get(springSecurityService.currentUser.id)
+
         respond question, view: 'create'
     }
 
