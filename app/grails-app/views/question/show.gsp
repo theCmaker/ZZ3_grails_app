@@ -58,10 +58,6 @@
                 </div>
             </sec:ifLoggedIn>
 
-<sec:ifAnyGranted roles='ROLE_ADMIN'>
-                    TPTPAR
-                </sec:ifAnyGranted>
-
             <sec:ifLoggedIn>
                     <g:form resource="${this.question}" method="DELETE">
                         <fieldset class="buttons">

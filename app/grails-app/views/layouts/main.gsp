@@ -36,7 +36,15 @@
                         <div class="login">
                             ${message(code: 'default.loggin.greeting', default: 'You are')} <sec:username/>
                         </div>
+                        <a class="login" href="${createLink(uri: '/logout')}">
+                            <g:message code="default.loggin.logout" />
+                        </a>
                     </sec:ifLoggedIn>
+                    <sec:ifNotLoggedIn>
+                        <a class="login" href="${createLink(uri: '/login')}">
+                            <g:message code="default.loggin.login" />
+                        </a>
+                    </sec:ifNotLoggedIn>
                 </ul>
             </div>
         </div>

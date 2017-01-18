@@ -43,3 +43,7 @@ th:hover, tr:hover {
     min-height: 2em;
     
 }
+
+.login {
+    color: white;
+}

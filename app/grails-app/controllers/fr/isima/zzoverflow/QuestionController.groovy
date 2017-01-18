@@ -3,15 +3,17 @@ package fr.isima.zzoverflow
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+import grails.plugin.springsecurity.*
+import grails.plugin.springsecurity.annotation.*
+
 @Transactional(readOnly = true)
 class QuestionController {
-    def springSecurityService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Question.list(params), model:[questionCount: Question.count()]
+        respond Question.list(params), model:[questionCount: Question.count()], view: '_index'
     }
 
     def show(Question question) {

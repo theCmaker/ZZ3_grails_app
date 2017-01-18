@@ -7,6 +7,8 @@ grails.plugin.springsecurity.authority.className = 'fr.isima.zzoverflow.Role'
 grails.plugin.springsecurity.authority.groupAuthorityNameField = 'authorities'
 grails.plugin.springsecurity.useRoleGroups = true
 grails.plugin.springsecurity.logout.postOnly = false
+grails.plugin.springsecurity.successHandler.useReferer = true
+
 
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
