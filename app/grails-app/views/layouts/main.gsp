@@ -33,7 +33,9 @@
                 <ul class="nav navbar-nav navbar-right">
                     <g:pageProperty name="page.nav" />
                     <sec:ifLoggedIn>
-                    Logged in as <sec:username/>
+                        <div class="login">
+                            ${message(code: 'default.loggin.greeting', default: 'You are')} <sec:username/>
+                        </div>
                     </sec:ifLoggedIn>
                 </ul>
             </div>

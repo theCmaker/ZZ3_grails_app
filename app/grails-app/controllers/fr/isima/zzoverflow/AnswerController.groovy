@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 import grails.plugin.springsecurity.*
+import grails.plugin.springsecurity.annotation.*
 
 @Transactional(readOnly = true)
 class AnswerController {
@@ -19,6 +20,7 @@ class AnswerController {
         respond answer, view: '_show'
     }
 
+    @Secured(value=['ROLE_USER'])
     def create() {
         // Create a new answer
         def answer = new Answer()
@@ -85,6 +87,7 @@ class AnswerController {
     }
 
     @Transactional
+    @Secured(value=['ROLE_ADMIN'])
     def delete(Answer answer) {
 
         if (answer == null) {

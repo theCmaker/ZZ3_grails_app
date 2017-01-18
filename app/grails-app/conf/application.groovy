@@ -6,6 +6,8 @@ grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'fr.isima.zzove
 grails.plugin.springsecurity.authority.className = 'fr.isima.zzoverflow.Role'
 grails.plugin.springsecurity.authority.groupAuthorityNameField = 'authorities'
 grails.plugin.springsecurity.useRoleGroups = true
+grails.plugin.springsecurity.logout.postOnly = false
+
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
 	[pattern: '/error',          access: ['permitAll']],
@@ -17,6 +19,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/**/css/**',      access: ['permitAll']],
 	[pattern: '/**/images/**',   access: ['permitAll']],
 	[pattern: '/**/favicon.ico', access: ['permitAll']],
+	[pattern: '/logout', access: ['permitAll']],
+	[pattern: '/logout/**', access: ['permitAll']],
 	[pattern: '/**/**', access: ['permitAll']]
 ]
 
