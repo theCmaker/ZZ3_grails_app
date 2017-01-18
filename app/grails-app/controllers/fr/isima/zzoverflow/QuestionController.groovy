@@ -22,11 +22,18 @@ class QuestionController {
         respond question
     }
 
+
+    // @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def create() {
-        respond new Question(params)
+        def question = new Question()
+
+        bindData(question, params, [include: ['title', 'content']])
+
+        respond question, view: 'create'
     }
 
     @Transactional
+    // @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def save(Question question) {
         if (question == null) {
             transactionStatus.setRollbackOnly()
@@ -34,7 +41,10 @@ class QuestionController {
             return
         }
 
-        if (question.hasErrors()) {
+        // Adding the date on save
+        question.date = new Date()
+
+        if (!question.validate()) {
             transactionStatus.setRollbackOnly()
             respond question.errors, view:'create'
             return
@@ -51,6 +61,7 @@ class QuestionController {
         }
     }
 
+    // @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def edit(Question question) {
         respond question
     }
@@ -81,6 +92,7 @@ class QuestionController {
     }
 
     @Transactional
+    // @Secured(['ROLE_ADMIN'])
     def delete(Question question) {
 
         if (question == null) {

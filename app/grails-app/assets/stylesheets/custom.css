@@ -47,3 +47,26 @@ th:hover, tr:hover {
 .login {
     color: white;
 }
+
+.question {
+    border: 1px solid grey;
+
+}
+
+.meta {
+    display: block;
+    
+    color: black;
+    background-color: lightblue;
+}
+
+.meta .user {
+    display: inline;
+    
+}
+
+.meta .date {
+    display: inline;
+    
+}
+

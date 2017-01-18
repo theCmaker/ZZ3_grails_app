@@ -7,56 +7,39 @@
         <title>
             <g:message code="default.show.label" args="[entityName]" />
         </title>
+
     </head>
 
     <body>
         <a href="#show-question" class="skip" tabindex="-1">
             <g:message code="default.link.skip.label" default="Skip to content&hellip;" />
         </a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li>
-                    <a class="home" href="${createLink(uri: '/')}">
-                        <g:message code="default.home.label" />
-                    </a>
-                </li>
-            </ul>
-        </div>
 
-        <div id="show-question" class="content scaffold-show" role="main">
+        <div id="show-question" class="content scaffold-show question" role="main">
 
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <!--<f:display bean="question" />-->
 
-            <div class="title question">
+            <!--Display the question title and content-->
+            <h1 class="title">
                 <f:display bean="question" property="title" />
-            </div>
+            </h1>
 
-            <div class="content question">
+            <div class="content">
                 <f:display bean="question" property="content" />
-
             </div>
 
-            <div class="answers question">
-
-                <g:each in="${question.answers}" var="ans">
-                    <div class="answer">
-                        <g:render template="/answer/show" model="[answer: ans]" />
-                    </div>
-                </g:each>
-
-            </div>
-
-            <!--This is an empty question to answer-->
-            <sec:ifLoggedIn>
-                <div class="create answer question">
-                    <div class="answer">
-                        <g:include controller="answer" action="create" />
-                    </div>
+            <div class="meta">
+                <div class="user">
+                    <f:display bean="question" property="user.username" />
                 </div>
-            </sec:ifLoggedIn>
+            
+                <div class="date">
+                    <g:formatDate format="yyyy-MM-dd HH:mm" date="${question.date}"/>
+                </div>
+            </div>
+        </div>
 
             <sec:ifLoggedIn>
                     <g:form resource="${this.question}" method="DELETE">
@@ -69,7 +52,25 @@
                 </fieldset>
                 </g:form>
             </sec:ifLoggedIn>
-</div>
-</body>
+
+            <!--Answers-->
+            <div class="answers question">
+                <g:each in="${question.answers}" var="ans">
+                    <div class="answer">
+                        <g:render template="/answer/show" model="[answer: ans]" />
+                    </div>
+                </g:each>
+            </div>
+
+            <!--This is an empty question to answer-->
+            <sec:ifLoggedIn>
+                <div class="create answer question">
+                    <div class="answer">
+                        <g:include controller="answer" action="create" params="[id: question.id]" />
+                    </div>
+                </div>
+            </sec:ifLoggedIn>
+
+    </body>
 
 </html>

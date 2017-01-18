@@ -5,12 +5,15 @@
     <div class="accepted">
         <f:display bean="answer" property="accepted" />
     </div>
-    <div class="username">
-        <f:display bean="answer" property="user.username" />
+    <div class="meta">
+        <div class="username">
+            <f:display bean="answer" property="user.username" />
+        </div>
+        <div class="date">
+            <g:formatDate format="yyyy-MM-dd HH:mm" date="${answer.date}"/>
+        </div>
     </div>
-    <div class="date">
-        <f:display bean="answer" property="date" />
-    </div>
+
 
     <sec:ifLoggedIn>
         <g:link class="edit" action="edit" resource="${this.answer}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
