@@ -20,7 +20,7 @@ class AnswerController {
         respond answer, view: '_show'
     }
 
-    @Secured(value=['ROLE_USER'])
+    @Secured(value=['ROLE_USER', 'ROLE_ADMIN'])
     def create() {
         // Create a new answer
         def answer = new Answer()
@@ -41,6 +41,7 @@ class AnswerController {
     }
 
     @Transactional
+    @Secured(value=['ROLE_USER', 'ROLE_ADMIN'])
     def save(Answer answer) {
 
         if (answer == null) {
@@ -63,6 +64,7 @@ class AnswerController {
     }
 
     // Enables the user that created it to edit the content ONLY
+    @Secured(value=['ROLE_USER', 'ROLE_ADMIN'])
     def edit(Answer answer) {
         respond answer, view: '_edit'
     }

@@ -33,9 +33,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     <g:pageProperty name="page.nav" />
                     <sec:ifLoggedIn>
+                        <g:link controller="user" action="show" params="[id: sec.loggedInUserInfo(field:'id')]" >
                         <div class="login">
                             ${message(code: 'default.loggin.greeting', default: 'You are')} <sec:username/>
                         </div>
+                        </g:link>
                         <a class="login" href="${createLink(uri: '/logout')}">
                             <g:message code="default.loggin.logout" />
                         </a>

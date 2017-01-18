@@ -9,6 +9,8 @@ import grails.plugin.springsecurity.annotation.*
 @Transactional(readOnly = true)
 class QuestionController {
 
+    def springSecurityService
+
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
