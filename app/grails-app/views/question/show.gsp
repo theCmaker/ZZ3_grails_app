@@ -15,43 +15,48 @@
             <g:message code="default.link.skip.label" default="Skip to content&hellip;" />
         </a>
 
-        <div id="show-question" class="content scaffold-show question" role="main">
+        <div class="panel panel-primary" role="main">
 
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
 
             <!--Display the question title and content-->
-            <h1 class="title">
-                <f:display bean="question" property="title" />
-            </h1>
+            <div class="panel-heading row">
 
-            <div class="content">
+                <div class="col-xs-9">
+                    <f:display bean="question" property="title" />
+                </div>
+
+                <div class="col-xs-3 align-right">
+
+                    <sec:ifLoggedIn>
+                        <g:form class="btn-group" resource="${this.question}" method="DELETE">
+                            <g:link class="btn btn-primary" action="edit" resource="${this.question}">
+                                <g:message code="default.button.edit.label" default="Edit" />
+                            </g:link>
+
+                            <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                        </g:form>
+                    </sec:ifLoggedIn>
+                </div>
+            </div>
+
+            <div class="panel-body">
                 <f:display bean="question" property="content" />
             </div>
 
-            <div class="meta">
-                <div class="user">
-                    <f:display bean="question" property="user.username" />
-                </div>
-            
-                <div class="date">
-                    <g:formatDate format="yyyy-MM-dd HH:mm" date="${question.date}"/>
-                </div>
+            <div class="panel-footer row">
+                    <div class="col-xs-6">
+                        <f:display bean="question" property="user.username" />
+                    </div>
+
+                    <div class="col-xs-6 text-right">
+                        <g:formatDate format="yyyy-MM-dd HH:mm" date="${question.date}" />
+                    </div>
             </div>
         </div>
 
-            <sec:ifLoggedIn>
-                    <g:form resource="${this.question}" method="DELETE">
-                        <fieldset class="buttons">
-                            <g:link class="edit" action="edit" resource="${this.question}"> <g:message code="default.button.edit.label" default="Edit" /> </g:link>
-                <sec:ifAnyGranted roles='ROLE_ADMIN'>
-                    TPTPAR
-                </sec:ifAnyGranted>
-                    <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                </fieldset>
-                </g:form>
-            </sec:ifLoggedIn>
 
             <!--Answers-->
             <div class="answers question">
@@ -71,6 +76,6 @@
                 </div>
             </sec:ifLoggedIn>
 
-    </body>
+            </body>
 
-</html>
+            </html>

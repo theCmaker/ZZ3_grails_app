@@ -2,12 +2,9 @@
     <g:message code="default.link.skip.label" default="Skip to content&hellip;" />
 </a>
 <div class="nav" role="navigation">
-    <ul>
-        <li>
-            <g:link class="create" action="create">
-                <g:message code="default.question.new" /></g:link>
-        </li>
-    </ul>
+    <g:link class="create" action="create">
+        <g:message code="default.question.new" />
+    </g:link>
 </div>
 <div id="list-question" class="content scaffold-list" role="main">
     

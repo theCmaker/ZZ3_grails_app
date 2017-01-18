@@ -32,41 +32,7 @@ th:hover, tr:hover {
     background:lightcyan no-repeat 50% 30%;
 }
 
-/** Answer **/
 
-.answer {
-    border: 1px solid lightgray;
+.hidden {
+    display: none;
 }
-
-.answer.content .content {
-    width: 100%;
-    min-height: 2em;
-    
-}
-
-.login {
-    color: white;
-}
-
-.question {
-    border: 1px solid grey;
-
-}
-
-.meta {
-    display: block;
-    
-    color: black;
-    background-color: lightblue;
-}
-
-.meta .user {
-    display: inline;
-    
-}
-
-.meta .date {
-    display: inline;
-    
-}
-

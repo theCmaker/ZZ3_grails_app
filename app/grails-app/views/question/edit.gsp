@@ -39,7 +39,7 @@
                 </div>
 
                 <!--Hidden fields-->
-                <div style="display:none;">
+                <div class="hidden">
                     <f:field bean="question" property="date" />
                     <f:field bean="question" property="tags" />
                     <f:field bean="question" property="answers" />

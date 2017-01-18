@@ -13,10 +13,12 @@
         <a href="#create-question" class="skip" tabindex="-1">
             <g:message code="default.link.skip.label" default="Skip to content&hellip;" />
         </a>
-        <div id="create-question" class="content scaffold-create" role="main">
+
+        <div class="content scaffold-create" role="main">
             <h1>
                 <g:message code="default.create.label" args="[entityName]" />
             </h1>
+            
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
@@ -29,21 +31,22 @@
                     </g:eachError>
                 </ul>
             </g:hasErrors>
-            <g:form action="save">
+
+            <g:form class="form-group" action="save">
 
                 <!--Accessible fields-->
                 <f:field bean="question" property="title" />
                 <f:field bean="question" property="content" />
 
                   <!--Hidden fields-->
-                <div style="display:none;">
+                <div class="hidden">
                     <f:field bean="question" property="date" />
                     <f:field bean="question" property="tags" />
                     <f:field bean="question" property="answers" />
                     <f:field bean="question" property="user" />
                 </div>
 
-                <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+                <g:submitButton name="create" class="save" value="${message(code: 'default.question.create', default: 'Create')}" />
             </g:form>
         </div>
     </body>

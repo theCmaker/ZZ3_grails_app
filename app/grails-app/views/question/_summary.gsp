@@ -1,6 +1,6 @@
 <div class="summary question">
 
-    <table class="table table-stripped">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>${message(code: 'default.question.title', default: 'Title')}</th>
@@ -12,21 +12,21 @@
         <tbody>
         <g:each in="${questions}" var="question">
             <tr>
-                <td class="title">
+                <td>
                     <g:link controller="question" action="show" params="[id: question.id]" >
                         <f:display bean="${question}" property="title" />
                     </g:link>
                 </td>
 
-                <td class="user">
+                <td>
                     <f:display bean="${question}" property="user.username" />
                 </td>
 
-                <td class="user">
+                <td>
                     <f:display bean="${question}" property="date" />
                 </td>
 
-                <td class="tag">
+                <td>
                     <f:display bean="${question}" property="tags" />
                 </td>
             </tr>
