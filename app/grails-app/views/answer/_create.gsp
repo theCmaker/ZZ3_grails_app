@@ -8,6 +8,7 @@
                 <div style="display:none;">
                 <f:field bean="answer" property="question" />
                 <f:field bean="answer" property="user" />
+                <f:field bean="answer" property="date" />
         </div>
 
             <!--Save the answer-->

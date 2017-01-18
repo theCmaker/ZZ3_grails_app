@@ -8,6 +8,8 @@ class Question {
 
     String content
 
+    Date date
+
     // Many to many keywords
     static hasMany = [ tags: Keyword, answers: Answer ]
 

@@ -21,7 +21,7 @@ class BootStrap {
         assert User.count() == 2
         assert Role.count() == 2
 
-        def question = new Question(title:'This is a question', content:'To be or not to be?', user: normalUser)
+        def question = new Question(title:'This is a question', content:'To be or not to be?', user: normalUser, date: new Date())
         question.save(flush: true)
 
     }

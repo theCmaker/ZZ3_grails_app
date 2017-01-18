@@ -8,6 +8,9 @@
     <div class="username">
         <f:display bean="answer" property="user.username" />
     </div>
+    <div class="date">
+        <f:display bean="answer" property="date" />
+    </div>
 
     <sec:ifLoggedIn>
         <g:link class="edit" action="edit" resource="${this.answer}"><g:message code="default.button.edit.label" default="Edit" /></g:link>

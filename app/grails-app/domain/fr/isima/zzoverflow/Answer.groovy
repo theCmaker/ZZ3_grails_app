@@ -7,6 +7,8 @@ class Answer {
 
     String content
 
+    Date date
+
     static belongsTo = [ question: Question, user: User ]
 
     static constraints = {
