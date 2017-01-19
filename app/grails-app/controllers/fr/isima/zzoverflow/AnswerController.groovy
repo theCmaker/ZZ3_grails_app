@@ -22,7 +22,7 @@ class AnswerController {
         respond answer, view: '_show'
     }
 
-    // @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def create() {
         // Create a new answer
         def answer = new Answer()
@@ -41,7 +41,7 @@ class AnswerController {
     }
 
     @Transactional
-    // @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def save(Answer answer) {
 
         if (answer == null) {
