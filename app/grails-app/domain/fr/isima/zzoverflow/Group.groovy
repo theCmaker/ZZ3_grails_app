@@ -20,6 +20,7 @@ class Group implements Serializable {
 	}
 
 	static mapping = {
+		table 'groups'
 		cache true
 	}
 }

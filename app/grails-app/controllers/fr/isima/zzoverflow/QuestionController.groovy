@@ -13,17 +13,23 @@ class QuestionController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Question.list(params), model:[questionCount: Question.count()], view: '_index'
     }
 
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def show(Question question) {
+        def auth = springSecurityService.principal
+          String username = auth.username
+          def authorities = auth.authorities // a Collection of GrantedAuthority
+          println username
+          println authorities
         respond question
     }
-
-
-    // @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def create() {
         def question = new Question()
 
@@ -36,7 +42,7 @@ class QuestionController {
     }
 
     @Transactional
-    // @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def save(Question question) {
         if (question == null) {
             transactionStatus.setRollbackOnly()
@@ -64,7 +70,7 @@ class QuestionController {
         }
     }
 
-    // @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def edit(Question question) {
         respond question
     }
@@ -95,7 +101,7 @@ class QuestionController {
     }
 
     @Transactional
-    // @Secured(['ROLE_ADMIN'])
+    @Secured(['ROLE_ADMIN'])
     def delete(Question question) {
 
         if (question == null) {

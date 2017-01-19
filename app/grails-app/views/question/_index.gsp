@@ -11,13 +11,8 @@
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
-    
-    <!--<f:table collection="${questionList}" />-->
 
     <g:render template="/question/summary" model="[questions: questionList]" />
-
-    </table>
-
 
 
     <div class="pagination">

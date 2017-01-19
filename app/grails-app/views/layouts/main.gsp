@@ -23,29 +23,33 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/#">
+                <a class="navbar-brand" href="/">
                     <i class="fa grails-icon">
                         <asset:image src="grails-cupsonly-logo-white.svg"/>
-                    </i> Grails
+                    </i> ${message(code: 'default.site.name')}
                 </a>
             </div>
             <div class="navbar-collapse collapse" aria-expanded="false" style="height: 0.8px;">
                 <ul class="nav navbar-nav navbar-right">
                     <g:pageProperty name="page.nav" />
                     <sec:ifLoggedIn>
-                        <g:link controller="user" action="show" params="[id: sec.loggedInUserInfo(field:'id')]" >
-                        <div class="login">
-                            ${message(code: 'default.loggin.greeting', default: 'You are')} <sec:username/>
-                        </div>
-                        </g:link>
-                        <a class="login" href="${createLink(uri: '/logout')}">
-                            <g:message code="default.loggin.logout" />
-                        </a>
+                        <li class="login">
+                            <g:link controller="user" action="show" params="[id: sec.loggedInUserInfo(field:'id')]" >
+                                ${message(code: 'default.loggin.greeting', default: 'You are')} <sec:username/>
+                            </g:link>
+                        </li>
+                        <li>
+                            <a class="login" href="${createLink(uri: '/logout')}">
+                                <g:message code="default.loggin.logout" />
+                            </a>
+                        </li>
                     </sec:ifLoggedIn>
                     <sec:ifNotLoggedIn>
-                        <a class="login" href="${createLink(uri: '/login')}">
-                            <g:message code="default.loggin.login" />
-                        </a>
+                        <li>
+                            <a class="login" href="${createLink(uri: '/login')}">
+                                <g:message code="default.loggin.login" />
+                            </a>
+                        </li>
                     </sec:ifNotLoggedIn>
                 </ul>
             </div>
