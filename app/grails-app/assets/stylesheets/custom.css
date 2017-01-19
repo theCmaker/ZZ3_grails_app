@@ -32,18 +32,7 @@ th:hover, tr:hover {
     background:lightcyan no-repeat 50% 30%;
 }
 
-/** Answer **/
 
-.answer {
-    border: 1px solid lightgray;
-}
-
-.answer.content .content {
-    width: 100%;
-    min-height: 2em;
-    
-}
-
-.login {
-    color: white;
+.hidden {
+    display: none;
 }

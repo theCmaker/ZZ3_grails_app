@@ -22,7 +22,7 @@ class AnswerController {
         respond answer, view: '_show'
     }
 
-    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    // @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def create() {
         // Create a new answer
         def answer = new Answer()
@@ -36,17 +36,12 @@ class AnswerController {
         // Get the user from the current session
         answer.user = User.get(springSecurityService.currentUser.id)
 
-        // Set the creation date
-        answer.date = new Date()
-
-        println "${authenticatedUser.getAuthorities()}"
-
         // Send to the _create view
         respond answer, view: '_create'
     }
 
     @Transactional
-    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    // @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def save(Answer answer) {
 
         if (answer == null) {
@@ -54,6 +49,11 @@ class AnswerController {
             notFound()
             return
         }
+
+        // Setting the date when we save
+        answer.date = new Date()
+
+        println "${answer.date}"
 
         if (!answer.validate()) {
             transactionStatus.setRollbackOnly()
@@ -69,7 +69,7 @@ class AnswerController {
     }
 
     // Enables the user that created it to edit the content ONLY
-    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    // @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def edit(Answer answer) {
         respond answer, view: '_edit'
     }

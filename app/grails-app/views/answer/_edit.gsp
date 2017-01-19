@@ -19,7 +19,7 @@
         <!--Answer content to change-->
         <f:field bean="answer" property="content" />
 
-        <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+        <input class="btn btn-success" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
     </g:form>
 </div>
 </body>
