@@ -13,9 +13,11 @@
         <div class="col-xs-4 btn-group">
         <sec:ifLoggedIn>
             <g:form class="btn-group" resource="${this.answer}" method="DELETE">
-                <g:link class="btn btn-primary" action="edit" resource="${this.answer}">
-                    <g:message code="default.button.edit.label" default="Edit" />
-                </g:link>
+                <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.answer.user.id}">
+                    <g:link class="btn btn-primary" action="edit" resource="${this.answer}">
+                        <g:message code="default.button.edit.label" default="Edit" />
+                    </g:link>
+                </sec:access>
 
                 <g:if test="${answer.accepted}">
                     <g:link class="btn btn-danger" action="revoke" controller="answer" ressource="${this.answer}" id="${this.answer.id}">
@@ -28,12 +30,9 @@
                     </g:link>
                 </g:else>
 
-                <!--<g:link class="btn btn-danger" action="delete" ressource="${this.answer}">
-                    <g:message code="default.button.delete.label" default="Delete" />
-                </g:link>-->
-                <sec:ifAnyGranted roles="ROLE_ADMIN">
+                <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.answer.user.id}">
                     <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                </sec:ifAnyGranted>
+                </sec:access>
             </g:form>
         </sec:ifLoggedIn>
         </div>

@@ -100,7 +100,7 @@ class QuestionController {
     }
 
     @Transactional
-    @Secured(['ROLE_ADMIN'])
+    @Secured(['ROLE_ADMIN','ROLE_MODO'])
     def delete(Question question) {
 
         if (question == null) {

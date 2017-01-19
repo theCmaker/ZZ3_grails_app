@@ -17,6 +17,8 @@ class BootStrap {
         adminUser.save(flush: true)
         def normalUser = new User(username: 'toto', enabled: true, password: 'toto')
         normalUser.save(flush: true)
+        def benjiUser = new User(username: 'benji', enabled: true, password: 'benji')
+        benjiUser.save(flush: true)
 
         UserGroup.create adminUser, adminGroup
         UserGroup.create normalUser, usersGroup

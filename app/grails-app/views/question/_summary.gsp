@@ -23,7 +23,7 @@
                 </td>
 
                 <td>
-                    <f:display bean="${question}" property="date" />
+                    <g:formatDate format="yyyy-MM-dd HH:mm" date="${question.date}" />
                 </td>
 
                 <td>
