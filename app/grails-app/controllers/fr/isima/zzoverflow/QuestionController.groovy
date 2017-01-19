@@ -24,8 +24,6 @@ class QuestionController {
         def auth = springSecurityService.principal
           String username = auth.username
           def authorities = auth.authorities // a Collection of GrantedAuthority
-          println username
-          println authorities
         respond question
     }
     

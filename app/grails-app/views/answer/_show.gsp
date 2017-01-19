@@ -18,12 +18,12 @@
                 </g:link>
 
                 <g:if test="${answer.accepted}">
-                    <g:link class="btn btn-danger" action="revoke" ressource="${this.answer}">
+                    <g:link class="btn btn-danger" action="revoke" controller="answer" ressource="${this.answer}" id="${this.answer.id}">
                         <g:message code="default.answer.revoke" default="Bad" />
                     </g:link>
                 </g:if>
                 <g:else>
-                    <g:link class="btn btn-success" action="accept" ressource="${this.answer}" id="${this.answer.id}">
+                    <g:link class="btn btn-success" action="accept" controller="answer" ressource="${this.answer}" id="${this.answer.id}">
                         <g:message code="default.answer.accept" default="Good" />
                     </g:link>
                 </g:else>
@@ -32,7 +32,7 @@
                     <g:message code="default.button.delete.label" default="Delete" />
                 </g:link>-->
                 <sec:ifAnyGranted roles="ROLE_ADMIN">
-                    <input class="btn btn-danger" type="submit" value="${message(code: '', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                    <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                 </sec:ifAnyGranted>
             </g:form>
         </sec:ifLoggedIn>

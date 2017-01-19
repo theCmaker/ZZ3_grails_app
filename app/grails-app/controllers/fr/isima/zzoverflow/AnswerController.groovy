@@ -49,8 +49,6 @@ class AnswerController {
         // Setting the date when we save
         answer.date = new Date()
 
-        println "${answer.date}"
-
         if (!answer.validate()) {
             transactionStatus.setRollbackOnly()
             respond answer.errors, view:'_create'
@@ -105,20 +103,48 @@ class AnswerController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
-                redirect action:"index", method:"GET"
+                redirect action:'show', controller:'question', method:"GET", params: [id: answer.question.id]
             }
             '*'{ render status: NO_CONTENT }
         }
     }
 
+        // Accept the answer in the question
     @Transactional
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def accept(Answer answer) {
 
-        answer.accept = true
+        if (answer == null) {
+            notFound()
+            return
+        }
 
-        println "Coucou"
+        // Check if there is already an accepted answer
+        def alreadyAccepted = answer?.question?.answers?.find{ it.accepted == true }
 
+        if(null != alreadyAccepted) {
+            // There is one, we revoke it and accept the new one
+            alreadyAccepted.accepted = false
+            alreadyAccepted.save flush:true
+        }
+
+        answer.accepted = true
+        answer.save flush:true
+        
+
+        redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
+    }
+
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def revoke(Answer answer) {
+
+        if (answer == null) {
+            notFound()
+            return
+        }
+
+        answer.accepted = false
         answer.save flush:true
 
         redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
