@@ -15,7 +15,9 @@ class AnswerController {
 
     // This method is used to view the answer and
     // - edit it for the user that created it
-    // - delete only for admins
+    // - delete only for admin
+
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def show(Answer answer) {
         respond answer, view: '_show'
     }
@@ -74,6 +76,7 @@ class AnswerController {
 
     // Called to update an existing answer
     @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def update(Answer answer) {
         if (answer == null) {
             transactionStatus.setRollbackOnly()
@@ -92,7 +95,7 @@ class AnswerController {
     }
 
     @Transactional
-    @Secured(['ROLE_ADMIN'])
+    @Secured(['ROLE_ADMIN','ROLE_MODO'])
     def delete(Answer answer) {
 
         if (answer == null) {

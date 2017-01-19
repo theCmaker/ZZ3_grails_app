@@ -13,15 +13,23 @@ class QuestionController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Question.list(params), model:[questionCount: Question.count()], view: '_index'
     }
 
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def show(Question question) {
+        def auth = springSecurityService.principal
+          String username = auth.username
+          def authorities = auth.authorities // a Collection of GrantedAuthority
+          println username
+          println authorities
         respond question
     }
 
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def create() {
         respond new Question(params)
     }

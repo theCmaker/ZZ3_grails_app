@@ -45,7 +45,7 @@ class UserGroup implements Serializable {
 
 	static UserGroup create(User user, Group group) {
 		def instance = new UserGroup(user: user, group: group)
-		instance.save()
+		instance.save(flush: true)
 		instance
 	}
 
