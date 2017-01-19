@@ -13,10 +13,6 @@ class AnswerController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    // This method is used to view the answer and
-    // - edit it for the user that created it
-    // - delete only for admin
-
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def show(Answer answer) {
         respond answer, view: '_show'
@@ -69,7 +65,7 @@ class AnswerController {
     }
 
     // Enables the user that created it to edit the content ONLY
-    // @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def edit(Answer answer) {
         respond answer, view: '_edit'
     }
@@ -115,6 +111,20 @@ class AnswerController {
         }
     }
 
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def accept(Answer answer) {
+
+        answer.accept = true
+
+        println "Coucou"
+
+        answer.save flush:true
+
+        redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
+    }
+
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {

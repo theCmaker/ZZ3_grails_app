@@ -76,6 +76,7 @@ class QuestionController {
     }
 
     @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def update(Question question) {
         if (question == null) {
             transactionStatus.setRollbackOnly()
@@ -115,12 +116,13 @@ class QuestionController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'question.label', default: 'Question'), question.id])
-                redirect action:"index", method:"GET"
+                redirect uri:"/", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
     }
 
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {
