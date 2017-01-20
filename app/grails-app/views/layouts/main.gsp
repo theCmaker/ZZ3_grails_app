@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>
-        <g:layoutTitle default="Grails"/>
+        <g:layoutTitle default="Overflozz"/>
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
@@ -13,7 +13,6 @@
     <g:layoutHead/>
 </head>
 <body>
-
     <div class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -47,7 +46,7 @@
                     <sec:ifNotLoggedIn>
                         <li>
                             <a class="login" href="${createLink(uri: '/login')}">
-                                <g:message code="default.loggin.login" />
+                                <i class="glyphicon glyphicon-user"></i> <g:message code="default.loggin.login" />
                             </a>
                         </li>
                     </sec:ifNotLoggedIn>
@@ -55,9 +54,11 @@
             </div>
         </div>
     </div>
-
-    <g:layoutBody/>
-
+    <div class="container">
+        <div class="row">
+            <g:layoutBody/>
+        </div>
+    </div>
     <div class="footer" role="contentinfo"></div>
 
     <div id="spinner" class="spinner" style="display:none;">
