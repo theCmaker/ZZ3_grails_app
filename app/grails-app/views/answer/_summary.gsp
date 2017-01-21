@@ -17,7 +17,7 @@
                 </td>
 
                 <td>
-                    <g:formatDate format="yyyy-MM-dd HH:mm" date="${answer.date}" />
+                    <g:formatDate formatName="default.date.format" date="${answer.date}" />
                 </td>
             </tr>
         </g:each>

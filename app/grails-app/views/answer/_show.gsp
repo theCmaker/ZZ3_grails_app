@@ -44,7 +44,7 @@
         </div>
 
         <div class="col-xs-4 text-right">
-            <g:formatDate format="yyyy-MM-dd HH:mm" date="${answer.date}" />
+            <g:formatDate formatName="default.date.format" date="${answer.date}" />
         </div>
     </div>
 

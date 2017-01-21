@@ -23,7 +23,7 @@
                 </td>
 
                 <td>
-                    <g:formatDate format="yyyy-MM-dd HH:mm" date="${question.date}" />
+                    <g:formatDate formatName="default.date.format" date="${question.date}" />
                 </td>
 
                 <td>

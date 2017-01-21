@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="col-xs-6 text-right">
-                        <g:formatDate format="yyyy-MM-dd HH:mm" date="${question.date}" />
+                        <g:formatDate formatName="default.date.format" date="${question.date}" />
                     </div>
             </div>
         </div>
