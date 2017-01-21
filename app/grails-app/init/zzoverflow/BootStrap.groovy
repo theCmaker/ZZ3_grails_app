@@ -24,15 +24,14 @@ class BootStrap {
         UserGroup.create normalUser, usersGroup
         
         GroupRole.create adminGroup, adminRole
+        GroupRole.create adminGroup, userRole
         GroupRole.create usersGroup, userRole
         // GroupRole.create modosGroup, Role.findByAuthority('ROLE_MODO')
 
 
-        // assert User.count() == 2
-        // assert Role.count() == 3
-        // assert Group.count() == 3
-        // assert GroupRole.count() == 3
-        // assert UserGroup.count() == 2
+        assert User.count() == 2
+        assert Role.count() == 2
+        assert Group.count() == 2
 
         def question = new Question(title:'This is a question', content:'To be or not to be?', user: normalUser, date: new Date())
         question.save(flush: true)

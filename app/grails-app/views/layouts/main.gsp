@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>
-        <g:layoutTitle default="Grails"/>
+        <g:layoutTitle default="Overflozz"/>
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
@@ -13,7 +13,6 @@
     <g:layoutHead/>
 </head>
 <body>
-
     <div class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -25,7 +24,7 @@
                 </button>
                 <a class="navbar-brand" href="/">
                     <i class="fa grails-icon">
-                        <asset:image src="grails-cupsonly-logo-white.svg"/>
+                        <asset:image src="overflozz-logo.png"/>
                     </i> ${message(code: 'default.site.name')}
                 </a>
             </div>
@@ -35,19 +34,19 @@
                     <sec:ifLoggedIn>
                         <li class="login">
                             <g:link controller="user" action="show" params="[id: sec.loggedInUserInfo(field:'id')]" >
-                                ${message(code: 'default.loggin.greeting', default: 'You are')} <sec:username/>
+                                <i class="glyphicon glyphicon-user"></i> ${message(code: 'default.loggin.greeting', default: 'You are')} <sec:username/>
                             </g:link>
                         </li>
                         <li>
                             <a class="login" href="${createLink(uri: '/logout')}">
-                                <g:message code="default.loggin.logout" />
+                                <i class="glyphicon glyphicon-log-out"></i> <g:message code="default.loggin.logout" />
                             </a>
                         </li>
                     </sec:ifLoggedIn>
                     <sec:ifNotLoggedIn>
                         <li>
                             <a class="login" href="${createLink(uri: '/login')}">
-                                <g:message code="default.loggin.login" />
+                                <i class="glyphicon glyphicon-log-in"></i> <g:message code="default.loggin.login" />
                             </a>
                         </li>
                     </sec:ifNotLoggedIn>
@@ -55,9 +54,11 @@
             </div>
         </div>
     </div>
-
-    <g:layoutBody/>
-
+    <div class="container">
+        <div class="row">
+            <g:layoutBody/>
+        </div>
+    </div>
     <div class="footer" role="contentinfo"></div>
 
     <div id="spinner" class="spinner" style="display:none;">
