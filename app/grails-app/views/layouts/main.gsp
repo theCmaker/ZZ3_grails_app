@@ -24,7 +24,7 @@
                 </button>
                 <a class="navbar-brand" href="/">
                     <i class="fa grails-icon">
-                        <asset:image src="grails-cupsonly-logo-white.svg"/>
+                        <asset:image src="overflozz-logo.png"/>
                     </i> ${message(code: 'default.site.name')}
                 </a>
             </div>
@@ -34,19 +34,19 @@
                     <sec:ifLoggedIn>
                         <li class="login">
                             <g:link controller="user" action="show" params="[id: sec.loggedInUserInfo(field:'id')]" >
-                                ${message(code: 'default.loggin.greeting', default: 'You are')} <sec:username/>
+                                <i class="glyphicon glyphicon-user"></i> ${message(code: 'default.loggin.greeting', default: 'You are')} <sec:username/>
                             </g:link>
                         </li>
                         <li>
                             <a class="login" href="${createLink(uri: '/logout')}">
-                                <g:message code="default.loggin.logout" />
+                                <i class="glyphicon glyphicon-log-out"></i> <g:message code="default.loggin.logout" />
                             </a>
                         </li>
                     </sec:ifLoggedIn>
                     <sec:ifNotLoggedIn>
                         <li>
                             <a class="login" href="${createLink(uri: '/login')}">
-                                <i class="glyphicon glyphicon-user"></i> <g:message code="default.loggin.login" />
+                                <i class="glyphicon glyphicon-log-in"></i> <g:message code="default.loggin.login" />
                             </a>
                         </li>
                     </sec:ifNotLoggedIn>
