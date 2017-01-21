@@ -22,6 +22,7 @@ class BootStrap {
 
         UserGroup.create adminUser, adminGroup
         UserGroup.create normalUser, usersGroup
+        UserGroup.create benjiUser, usersGroup
         
         GroupRole.create adminGroup, adminRole
         GroupRole.create adminGroup, userRole
