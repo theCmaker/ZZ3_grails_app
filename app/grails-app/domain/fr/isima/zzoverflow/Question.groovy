@@ -2,21 +2,27 @@ package fr.isima.zzoverflow
 
 class Question {
 
-    // TODO:validator for tag in list of all tags or none
-
+    /// The Question main title
     String title
 
+    /// The Question content
     String content
 
+    /// The Question creation Date
     Date date
 
-    // Many to many keywords
+    /// We store the answers in a sorted set to display them properly
+    SortedSet answers
+
+    // Many to many Tag and Answer
     static hasMany = [ tags: Keyword, answers: Answer ]
 
     static belongsTo = [ user: User ]
 
+    /// The title or the content cannot be blank
     static constraints = {
         title blank: false
         content blank: false
     }
+
 }
