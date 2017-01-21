@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="col-xs-3 align-right">
-
+                    <sec:ifLoggedIn>
                     <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.question.user.id}">
                         <g:form class="btn-group" resource="${this.question}" method="DELETE">
                             <g:link class="btn btn-primary" action="edit" resource="${this.question}">
@@ -41,6 +41,7 @@
                             </sec:ifAnyGranted>
                         </g:form>
                     </sec:access>
+                    </sec:ifLoggedIn>
                 </div>
             </div>
 

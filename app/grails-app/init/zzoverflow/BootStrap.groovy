@@ -29,7 +29,7 @@ class BootStrap {
         // GroupRole.create modosGroup, Role.findByAuthority('ROLE_MODO')
 
 
-        assert User.count() == 2
+        assert User.count() == 3
         assert Role.count() == 2
         assert Group.count() == 2
 
