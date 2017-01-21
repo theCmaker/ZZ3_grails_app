@@ -15,11 +15,12 @@
             <g:message code="default.link.skip.label" default="Skip to content&hellip;" />
         </a>
 
+        <g:if test="${flash.message}">
+            <div class="message" role="status">${flash.message}</div>
+        </g:if>
+        
         <div class="panel panel-primary" role="main">
 
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
 
             <!--Display the question title and content-->
             <div class="panel-heading row">
