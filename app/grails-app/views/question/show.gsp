@@ -30,17 +30,17 @@
 
                 <div class="col-xs-3 align-right">
                     <sec:ifLoggedIn>
-                    <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.question.user.id}">
-                        <g:form class="btn-group" resource="${this.question}" method="DELETE">
-                            <g:link class="btn btn-primary" action="edit" resource="${this.question}">
-                                <g:message code="default.button.edit.label" default="Edit" />
-                            </g:link>
+                        <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.question.user.id}">
+                            <g:form class="btn-group" resource="${this.question}" method="DELETE">
+                                <g:link class="btn btn-primary" action="edit" resource="${this.question}">
+                                    <g:message code="default.button.edit.label" default="Edit" />
+                                </g:link>
 
-                            <sec:ifAnyGranted roles="ROLE_ADMIN" >
-                                <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                            </sec:ifAnyGranted>
-                        </g:form>
-                    </sec:access>
+                                <sec:ifAnyGranted roles="ROLE_ADMIN" >
+                                    <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                                </sec:ifAnyGranted>
+                            </g:form>
+                        </sec:access>
                     </sec:ifLoggedIn>
                 </div>
             </div>

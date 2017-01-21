@@ -42,15 +42,17 @@
                 <g:render template="/answer/summary" model="[answers: this.user.answers]" />
             </div>
 
-            <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.user.id}">
-                <g:form resource="${this.user}" method="DELETE" class="btn-group">
-                    <g:link class="btn btn-primary" action="edit" resource="${this.user}">
-                        <g:message code="default.button.edit.label" default="Edit" />
-                    </g:link>
-                    
-                        <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                </g:form>
-            </sec:access> 
+            <sec:ifLoggedIn>
+                <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.user.id}">
+                    <g:form resource="${this.user}" method="DELETE" class="btn-group">
+                        <g:link class="btn btn-primary" action="edit" resource="${this.user}">
+                            <g:message code="default.button.edit.label" default="Edit" />
+                        </g:link>
+                        
+                            <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                    </g:form>
+                </sec:access>
+            </sec:ifLoggedIn>
 </div>
 </body>
 

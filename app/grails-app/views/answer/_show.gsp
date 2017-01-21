@@ -21,7 +21,6 @@
                     </sec:access>
 
                     <!--Only an admin or the question author can accept / reject-->
-                    <sec:ifLoggedIn>
                     <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.answer.question.user.id}">
                     <!--Accept / reject button-->
                         <g:if test="${answer.accepted}">
@@ -35,7 +34,6 @@
                             </g:link>
                         </g:else>
                     </sec:access>
-                    </sec:ifLoggedIn>
 
                     <!--Acces only of creator or admin-->
                     <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.answer.user.id}">
