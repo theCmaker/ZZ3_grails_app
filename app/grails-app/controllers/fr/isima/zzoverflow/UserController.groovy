@@ -3,8 +3,13 @@ package fr.isima.zzoverflow
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+import grails.plugin.springsecurity.*
+import grails.plugin.springsecurity.annotation.*
+
 @Transactional(readOnly = true)
 class UserController {
+
+    def springSecurityService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -13,6 +18,7 @@ class UserController {
         respond User.list(params), model:[userCount: User.count()]
     }
 
+    @Secured(['ROLE_USER'])
     def show(User user) {
         respond user
     }
