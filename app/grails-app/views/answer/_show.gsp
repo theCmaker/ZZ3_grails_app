@@ -1,7 +1,23 @@
 <div class="panel ${this.answer?.accepted ? 'panel-success':'panel-info'}" role="main">
 
-    <div class="panel-heading">
-        <f:display bean="answer" property="content" />
+    <div class="panel-heading row">
+        <div class="col-xs-11">
+            <f:display class="col-xs-11" bean="answer" property="content" />
+        </div>
+
+        <sec:ifLoggedIn>
+            <div class="col-xs-1 text-center" style="border-left: 1px solid lightgrey;">
+                <g:link class="btn btn-primary" action="upvote" controller="answer" ressource="${this.answer}" id="${this.answer.id}">
+                    <span>+</span>
+                </g:link>
+
+                <div>${this.answer.getScore()}</div>
+
+                <g:link class="btn btn-primary" action="downvote" controller="answer" ressource="${this.answer}" id="${this.answer.id}">
+                    <span>-</span>
+                </g:link>
+            </div>
+        </sec:ifLoggedIn>
     </div>
 
     <div class="panel-footer row">

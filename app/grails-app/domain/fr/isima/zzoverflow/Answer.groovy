@@ -11,6 +11,10 @@ class Answer implements Comparable {
     /// The date the answer was created
     Date date
 
+    /// Set containing the users id that voted. Used to calculate the score
+    Set<Long> upVoters = []
+    Set<Long> downVoters = []
+
     /// An answer is related to a Question and is given by a User
     static belongsTo = [ question: Question, user: User ]
 
@@ -19,8 +23,14 @@ class Answer implements Comparable {
         content blank: false
     }
 
+    /// Override of Comparable to order the answers
     int compareTo(other) {
-        other.accepted <=> accepted ?: date <=> other.date
+        other.accepted <=> accepted ?: getScore() <=> other.getScore() ?: date <=> other.date
+    }
+
+    /// Return the score of the answer calculated from users that up and down voted
+    int getScore() {
+        return upVoters.size() - downVoters.size()
     }
 
 }

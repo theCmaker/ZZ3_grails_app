@@ -150,6 +150,53 @@ class AnswerController {
         redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
     }
 
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def upvote(Answer answer) {
+
+        if (answer == null) {
+            notFound()
+            return
+        }
+
+        // get the current user to manupulate him from the lists
+        long currentUserId = springSecurityService.currentUser.id
+
+        // Remove the user from the downVoters list to add it here
+        answer.downVoters -= currentUserId
+
+        // Add the user in the upVoters list
+        answer.upVoters += currentUserId
+
+        answer.save flush:true
+
+        // Redirect to show to update view and maybe ordering
+        redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
+    }
+
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def downvote(Answer answer) {
+
+        if (answer == null) {
+            notFound()
+            return
+        }
+
+        // get the current user to manupulate him from the lists
+        long currentUserId = springSecurityService.currentUser.id
+
+        // Remove the user from the downVoters list to add it here
+        answer.upVoters.remove(currentUserId)
+
+        // Add the user in the upVoters list
+        answer.downVoters.add(currentUserId)
+
+        answer.save flush:true
+
+        redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
+    }
+
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     protected void notFound() {
         request.withFormat {
