@@ -21,24 +21,36 @@
 
 
             <h1>
-                <f:display bean="user" property="username" label="TOTOTOT"/>
+                <i class="glyphicon glyphicon-user"></i> <f:display bean="user" property="username" label="TOTOTOT"/>
             </h1>
+
+            <div class="row">
+                <h2>
+                    <i class="glyphicon glyphicon-certificate"></i> <g:message code="default.user.show.badge" default="Badges" />
+                </h2>
+                <g:render template="/badge/summary" model="[badges: this.user.badges]" />
+            </div>
             
             <sec:ifAnyGranted  roles="ROLE_ADMIN">
-                <f:display bean="user" property="password" />
-                <f:display bean="user" property="enabled" />
-                <f:display bean="user" property="accountExpired" />
-                <f:display bean="user" property="accountLocked" />
-                <f:display bean="user" property="passwordExpired" />
+                <div class="row">
+                    <f:display bean="user" property="enabled" />
+                    <f:display bean="user" property="accountExpired" />
+                    <f:display bean="user" property="accountLocked" />
+                    <f:display bean="user" property="passwordExpired" />
+                </div>
             </sec:ifAnyGranted>
 
-            <div>
-                <g:message code="default.user.show.question" default="Questions" />
+            <div class="row">
+                <h2>
+                    <i class="glyphicon glyphicon-question-sign"></i> <g:message code="default.user.show.question" default="Questions" />
+                </h2>
                 <g:render template="/question/summary" model="[questions: this.user.questions]" />
             </div>
 
-            <div>
-                <g:message code="default.user.show.answer" default="Answers" />
+            <div class="row">
+                <h2>
+                    <i class="glyphicon glyphicon-share"></i> <g:message code="default.user.show.answer" default="Answers" />
+                </h2>
                 <g:render template="/answer/summary" model="[answers: this.user.answers]" />
             </div>
 
@@ -49,7 +61,7 @@
                             <g:message code="default.button.edit.label" default="Edit" />
                         </g:link>
                         
-                            <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                        <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                     </g:form>
                 </sec:access>
             </sec:ifLoggedIn>

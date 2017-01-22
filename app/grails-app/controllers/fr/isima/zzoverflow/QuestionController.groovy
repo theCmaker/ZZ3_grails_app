@@ -48,6 +48,10 @@ class QuestionController {
             return
         }
 
+        if (question.user.questions != null && question.user.questions.size() == 4) {
+            def badge = new Badge(name: "curious", user: question.user).save()
+        }
+
         // Adding the date on save
         question.date = new Date()
 

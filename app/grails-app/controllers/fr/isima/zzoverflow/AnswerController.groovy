@@ -46,6 +46,11 @@ class AnswerController {
             return
         }
 
+        if (answer.user.answers != null && answer.user.answers.size() == 4) {
+            def badge = new Badge(name: "talkative", user: answer.user).save()
+        }
+
+
         // Setting the date when we save
         answer.date = new Date()
 
