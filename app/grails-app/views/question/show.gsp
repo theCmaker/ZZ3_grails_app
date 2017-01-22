@@ -21,28 +21,11 @@
         
         <div class="panel panel-primary" role="main">
 
-
             <!--Display the question title and content-->
             <div class="panel-heading row">
 
-                <div class="col-xs-9">
+                <div id="question-title">
                     <f:display bean="question" property="title" />
-                </div>
-
-                <div class="col-xs-3 align-right">
-                    <sec:ifLoggedIn>
-                        <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.question.user.id}">
-                            <g:form class="btn-group" resource="${this.question}" method="DELETE">
-                                <g:link class="btn btn-primary" action="edit" resource="${this.question}">
-                                    <g:message code="default.button.edit.label" default="Edit" />
-                                </g:link>
-
-                                <sec:ifAnyGranted roles="ROLE_ADMIN" >
-                                    <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                                </sec:ifAnyGranted>
-                            </g:form>
-                        </sec:access>
-                    </sec:ifLoggedIn>
                 </div>
             </div>
 
@@ -51,11 +34,27 @@
             </div>
 
             <div class="panel-footer row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-4">
                         <f:display bean="question" property="user.username" />
                     </div>
 
-                    <div class="col-xs-6 text-right">
+                    <div class="col-xs-4 text-center">
+                        <sec:ifLoggedIn>
+                            <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.question.user.id}">
+                                <g:form class="btn-group" resource="${this.question}" method="DELETE">
+                                    <g:link class="btn btn-primary" action="edit" resource="${this.question}">
+                                        <g:message code="default.button.edit.label" default="Edit" />
+                                    </g:link>
+
+                                    <sec:ifAnyGranted roles="ROLE_ADMIN" >
+                                        <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                                    </sec:ifAnyGranted>
+                                </g:form>
+                            </sec:access>
+                        </sec:ifLoggedIn>
+                    </div>
+
+                    <div class="col-xs-4 text-right">
                         <g:formatDate formatName="default.date.format" date="${question.date}" />
                     </div>
             </div>

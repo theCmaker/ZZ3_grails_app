@@ -2,22 +2,24 @@
 
     <div class="panel-heading row">
         <div class="col-xs-11">
-            <f:display class="col-xs-11" bean="answer" property="content" />
+            <f:display bean="answer" property="content" />
         </div>
 
-        <sec:ifLoggedIn>
-            <div class="col-xs-1 text-center" style="border-left: 1px solid lightgrey;">
-                <g:link class="btn btn-primary" action="upvote" controller="answer" ressource="${this.answer}" id="${this.answer.id}">
-                    <span>+</span>
-                </g:link>
+            <div class="col-xs-1 text-center vote-section">
+                <sec:ifLoggedIn>
+                    <g:link class="btn btn-block btn-primary" action="upvote" controller="answer" ressource="${this.answer}" id="${this.answer.id}">
+                        <span>+</span>
+                    </g:link>
+                </sec:ifLoggedIn>
 
-                <div>${this.answer.getScore()}</div>
+                <div class="value">${this.answer.getScore()}</div>
 
-                <g:link class="btn btn-primary" action="downvote" controller="answer" ressource="${this.answer}" id="${this.answer.id}">
-                    <span>-</span>
-                </g:link>
+                <sec:ifLoggedIn>
+                    <g:link class="btn btn-block btn-primary" action="downvote" controller="answer" ressource="${this.answer}" id="${this.answer.id}">
+                        <span>-</span>
+                    </g:link>
+                </sec:ifLoggedIn>
             </div>
-        </sec:ifLoggedIn>
     </div>
 
     <div class="panel-footer row">
@@ -26,7 +28,7 @@
             <f:display bean="answer" property="user.username" />
         </div>
 
-        <div class="col-xs-4 btn-group">
+        <div class="col-xs-4 text-center">
             <sec:ifLoggedIn>
                 <g:form class="btn-group" resource="${this.answer}" method="DELETE">
                     <!--Acces only of creator or admin-->
