@@ -25,7 +25,7 @@ class Answer implements Comparable {
 
     /// Override of Comparable to order the answers
     int compareTo(other) {
-        other.accepted <=> accepted ?: getScore() <=> other.getScore() ?: date <=> other.date
+        other.accepted <=> accepted ?: other.getScore() <=> getScore() ?: date <=> other.date
     }
 
     /// Return the score of the answer calculated from users that up and down voted
