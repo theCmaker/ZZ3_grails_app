@@ -1,6 +1,6 @@
 package fr.isima.zzoverflow
 
-class Question {
+class Question implements Comparable {
 
     /// The Question main title
     String title
@@ -10,6 +10,10 @@ class Question {
 
     /// The Question creation Date
     Date date
+
+    /// Set containing the users id that voted up or down
+    Set<Long> upVoters = []
+    Set<Long> downVoters = []
 
     /// We store the answers in a sorted set to display them properly
     SortedSet answers
@@ -23,6 +27,14 @@ class Question {
     static constraints = {
         title blank: false
         content blank: false
+    }
+
+    int compareTo(other) {
+        other.getScore() <=> getScore() ?: date <=> other.date
+    }
+
+    int getScore() {
+        return upVoters.size() - downVoters.size()
     }
 
 }

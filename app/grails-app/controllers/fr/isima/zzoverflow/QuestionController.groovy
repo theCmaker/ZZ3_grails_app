@@ -124,6 +124,53 @@ class QuestionController {
         }
     }
 
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def upvote(Question question) {
+
+        if (question == null) {
+            notFound()
+            return
+        }
+
+        // get the current user to manupulate him from the lists
+        long currentUserId = springSecurityService.currentUser.id
+
+        // Remove the user from the downVoters list to add it here
+        question.downVoters -= currentUserId
+
+        // Add the user in the upVoters list
+        question.upVoters += currentUserId
+
+        question.save flush:true
+
+        // Redirect to show to update view and maybe ordering
+        redirect uri:"/", method:"GET"
+    }
+
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def downvote(Question question) {
+
+        if (question == null) {
+            notFound()
+            return
+        }
+
+        // get the current user to manupulate him from the lists
+        long currentUserId = springSecurityService.currentUser.id
+
+        // Remove the user from the downVoters list to add it here
+        question.upVoters.remove(currentUserId)
+
+        // Add the user in the upVoters list
+        question.downVoters.add(currentUserId)
+
+        question.save flush:true
+
+        redirect uri:"/", method:"GET"
+    }
+
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     protected void notFound() {
         request.withFormat {
