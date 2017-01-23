@@ -46,7 +46,8 @@
                     <f:field bean="question" property="user" />
                 </div>
 
-                <g:submitButton name="create" class="save" value="${message(code: 'default.question.create', default: 'Create')}" />
+                
+                <g:submitButton name="create" class="btn btn-success glyphicon glyphicon-send" value="${message(code: 'default.question.create', default: 'Create')}" />
             </g:form>
         </div>
     </body>

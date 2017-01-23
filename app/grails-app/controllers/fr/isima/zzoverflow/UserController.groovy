@@ -24,7 +24,7 @@ class UserController {
         respond user
     }
 
-    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def create() {
         respond new User(params)
     }

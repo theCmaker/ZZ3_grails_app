@@ -15,6 +15,9 @@
                 <td>
                     <g:link controller="question" action="show" params="[id: question.id]" >
                         <f:display bean="${question}" property="title" />
+                        <g:if test="${question.answers.any{ it -> it.accepted } }">
+                            <i class="glyphicon glyphicon-ok"></i>
+                        </g:if>
                     </g:link>
                 </td>
 
@@ -30,7 +33,7 @@
                     <div class="text-center btn-group">
                         <sec:ifLoggedIn>
                             <g:link class="btn btn-primary" action="upvote" controller="question" ressource="${question}" id="${question.id}">
-                                <span>+</span>
+                                <i class="glyphicon glyphicon-thumbs-up"></i>
                             </g:link>
                         </sec:ifLoggedIn>
 
@@ -38,7 +41,7 @@
 
                         <sec:ifLoggedIn>
                             <g:link class="btn btn-primary" action="downvote" controller="question" ressource="${question}" id="${question.id}">
-                                <span>-</span>
+                                <i class="glyphicon glyphicon-thumbs-down"></i>
                             </g:link>
                         </sec:ifLoggedIn>
                 </td>

@@ -26,6 +26,11 @@
 
                 <div id="question-title">
                     <f:display bean="question" property="title" />
+
+                    <g:if test="${this.question.answers.any{ it -> it.accepted } }">
+                        <i class="glyphicon glyphicon-ok"></i>
+                    </g:if>
+
                 </div>
             </div>
 
@@ -35,6 +40,7 @@
 
             <div class="panel-footer row">
                     <div class="col-xs-4">
+                        <i class="glyphicon glyphicon-user"></i>
                         <f:display bean="question" property="user.username" />
                     </div>
 
@@ -43,6 +49,7 @@
                             <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.question.user.id}">
                                 <g:form class="btn-group" resource="${this.question}" method="DELETE">
                                     <g:link class="btn btn-primary" action="edit" resource="${this.question}">
+                                        <i class="glyphicon glyphicon-pencil"></i>
                                         <g:message code="default.button.edit.label" default="Edit" />
                                     </g:link>
 
@@ -55,6 +62,7 @@
                     </div>
 
                     <div class="col-xs-4 text-right">
+                        <i class="glyphicon glyphicon-calendar"></i>
                         <g:formatDate formatName="default.date.format" date="${question.date}" />
                     </div>
             </div>
