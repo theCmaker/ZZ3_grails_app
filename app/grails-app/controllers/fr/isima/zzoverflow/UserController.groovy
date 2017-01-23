@@ -30,13 +30,14 @@ class UserController {
     }
 
     @Transactional
-    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def save(User user) {
+
         if (user == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
-        }
+        } 
 
         if (user.hasErrors()) {
             transactionStatus.setRollbackOnly()
@@ -46,10 +47,13 @@ class UserController {
 
         user.save flush:true
 
+        // Set default rights
+        UserGroup.create user, Group.findByName('Users');
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
-                redirect user
+                redirect(uri: "/login/auth")
             }
             '*' { respond user, [status: CREATED] }
         }
