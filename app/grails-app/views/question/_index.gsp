@@ -12,7 +12,7 @@
         <div class="message" role="status">${flash.message}</div>
     </g:if>
 
-    <g:render template="/question/summary" model="[questions: questionList]" />
+    <g:render template="/question/summary" model="[questions: questionList.sort()]" />
 
 
     <div class="pagination">

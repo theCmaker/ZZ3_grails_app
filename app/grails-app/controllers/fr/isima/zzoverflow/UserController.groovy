@@ -13,27 +13,31 @@ class UserController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    @Secured(['ROLE_ADMIN','ROLE_MODO'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond User.list(params), model:[userCount: User.count()]
     }
 
-    @Secured(['ROLE_USER'])
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def show(User user) {
         respond user
     }
 
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def create() {
         respond new User(params)
     }
 
     @Transactional
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def save(User user) {
+
         if (user == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
-        }
+        } 
 
         if (user.hasErrors()) {
             transactionStatus.setRollbackOnly()
@@ -43,20 +47,25 @@ class UserController {
 
         user.save flush:true
 
+        // Set default rights
+        UserGroup.create user, Group.findByName('Users');
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
-                redirect user
+                redirect(uri: "/login/auth")
             }
             '*' { respond user, [status: CREATED] }
         }
     }
 
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def edit(User user) {
         respond user
     }
 
     @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def update(User user) {
         if (user == null) {
             transactionStatus.setRollbackOnly()
@@ -82,6 +91,7 @@ class UserController {
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN','ROLE_MODO'])
     def delete(User user) {
 
         if (user == null) {
@@ -101,6 +111,7 @@ class UserController {
         }
     }
 
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {

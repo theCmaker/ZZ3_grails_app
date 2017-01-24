@@ -45,6 +45,12 @@
                     </sec:ifLoggedIn>
                     <sec:ifNotLoggedIn>
                         <li>
+                            <g:link controller="user" action="create">
+                                <i class="glyphicon glyphicon-edit"></i>
+                                <g:message code="default.loggin.sign" default="Sign up" />
+                            </g:link>
+                        </li>
+                        <li>
                             <a class="login" href="${createLink(uri: '/login')}">
                                 <i class="glyphicon glyphicon-log-in"></i> <g:message code="default.loggin.login" />
                             </a>

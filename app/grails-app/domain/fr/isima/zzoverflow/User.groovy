@@ -13,12 +13,13 @@ class User implements Serializable {
 
 	String username
 	String password
+	int points = 0
 	boolean enabled = true
-	boolean accountExpired
-	boolean accountLocked
-	boolean passwordExpired
+	boolean accountExpired = false
+	boolean accountLocked = false
+	boolean passwordExpired = false
 
-	static hasMany = [ answers: Answer, questions: Question ]
+	static hasMany = [ answers: Answer, questions: Question, badges: Badge ]
 
 	Set<Group> getAuthorities() {
 		UserGroup.findAllByUser(this)*.group

@@ -24,8 +24,6 @@ class QuestionController {
         def auth = springSecurityService.principal
           String username = auth.username
           def authorities = auth.authorities // a Collection of GrantedAuthority
-          println username
-          println authorities
         respond question
     }
     
@@ -48,6 +46,10 @@ class QuestionController {
             transactionStatus.setRollbackOnly()
             notFound()
             return
+        }
+
+        if (question.user.questions != null && question.user.questions.size() == 4) {
+            def badge = new Badge(name: "curious", user: question.user).save()
         }
 
         // Adding the date on save
@@ -76,6 +78,7 @@ class QuestionController {
     }
 
     @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def update(Question question) {
         if (question == null) {
             transactionStatus.setRollbackOnly()
@@ -101,7 +104,7 @@ class QuestionController {
     }
 
     @Transactional
-    @Secured(['ROLE_ADMIN'])
+    @Secured(['ROLE_ADMIN','ROLE_MODO'])
     def delete(Question question) {
 
         if (question == null) {
@@ -115,12 +118,60 @@ class QuestionController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'question.label', default: 'Question'), question.id])
-                redirect action:"index", method:"GET"
+                redirect uri:"/", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
     }
 
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def upvote(Question question) {
+
+        if (question == null) {
+            notFound()
+            return
+        }
+
+        // get the current user to manupulate him from the lists
+        long currentUserId = springSecurityService.currentUser.id
+
+        // Remove the user from the downVoters list to add it here
+        question.downVoters -= currentUserId
+
+        // Add the user in the upVoters list
+        question.upVoters += currentUserId
+
+        question.save flush:true
+
+        // Redirect to show to update view and maybe ordering
+        redirect uri:"/", method:"GET"
+    }
+
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def downvote(Question question) {
+
+        if (question == null) {
+            notFound()
+            return
+        }
+
+        // get the current user to manupulate him from the lists
+        long currentUserId = springSecurityService.currentUser.id
+
+        // Remove the user from the downVoters list to add it here
+        question.upVoters.remove(currentUserId)
+
+        // Add the user in the upVoters list
+        question.downVoters.add(currentUserId)
+
+        question.save flush:true
+
+        redirect uri:"/", method:"GET"
+    }
+
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {

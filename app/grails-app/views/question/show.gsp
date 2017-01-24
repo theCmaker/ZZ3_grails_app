@@ -15,30 +15,22 @@
             <g:message code="default.link.skip.label" default="Skip to content&hellip;" />
         </a>
 
+        <g:if test="${flash.message}">
+            <div class="message" role="status">${flash.message}</div>
+        </g:if>
+        
         <div class="panel panel-primary" role="main">
-
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
 
             <!--Display the question title and content-->
             <div class="panel-heading row">
 
-                <div class="col-xs-9">
+                <div id="question-title">
                     <f:display bean="question" property="title" />
-                </div>
 
-                <div class="col-xs-3 align-right">
+                    <g:if test="${this.question.answers.any{ it -> it.accepted } }">
+                        <i class="glyphicon glyphicon-ok"></i>
+                    </g:if>
 
-                    <sec:ifLoggedIn>
-                        <g:form class="btn-group" resource="${this.question}" method="DELETE">
-                            <g:link class="btn btn-primary" action="edit" resource="${this.question}">
-                                <g:message code="default.button.edit.label" default="Edit" />
-                            </g:link>
-
-                            <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                        </g:form>
-                    </sec:ifLoggedIn>
                 </div>
             </div>
 
@@ -47,12 +39,31 @@
             </div>
 
             <div class="panel-footer row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-4">
+                        <i class="glyphicon glyphicon-user"></i>
                         <f:display bean="question" property="user.username" />
                     </div>
 
-                    <div class="col-xs-6 text-right">
-                        <g:formatDate format="yyyy-MM-dd HH:mm" date="${question.date}" />
+                    <div class="col-xs-4 text-center">
+                        <sec:ifLoggedIn>
+                            <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.question.user.id}">
+                                <g:form class="btn-group" resource="${this.question}" method="DELETE">
+                                    <g:link class="btn btn-primary" action="edit" resource="${this.question}">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                        <g:message code="default.button.edit.label" default="Edit" />
+                                    </g:link>
+
+                                    <sec:ifAnyGranted roles="ROLE_ADMIN" >
+                                        <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                                    </sec:ifAnyGranted>
+                                </g:form>
+                            </sec:access>
+                        </sec:ifLoggedIn>
+                    </div>
+
+                    <div class="col-xs-4 text-right">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        <g:formatDate formatName="default.date.format" date="${question.date}" />
                     </div>
             </div>
         </div>

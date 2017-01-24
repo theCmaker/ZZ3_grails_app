@@ -17,9 +17,12 @@ class BootStrap {
         adminUser.save(flush: true)
         def normalUser = new User(username: 'toto', enabled: true, password: 'toto')
         normalUser.save(flush: true)
+        def benjiUser = new User(username: 'benji', enabled: true, password: 'benji')
+        benjiUser.save(flush: true)
 
         UserGroup.create adminUser, adminGroup
         UserGroup.create normalUser, usersGroup
+        UserGroup.create benjiUser, usersGroup
         
         GroupRole.create adminGroup, adminRole
         GroupRole.create adminGroup, userRole
@@ -27,7 +30,7 @@ class BootStrap {
         // GroupRole.create modosGroup, Role.findByAuthority('ROLE_MODO')
 
 
-        assert User.count() == 2
+        assert User.count() == 3
         assert Role.count() == 2
         assert Group.count() == 2
 

@@ -13,10 +13,6 @@ class AnswerController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    // This method is used to view the answer and
-    // - edit it for the user that created it
-    // - delete only for admin
-
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def show(Answer answer) {
         respond answer, view: '_show'
@@ -50,10 +46,13 @@ class AnswerController {
             return
         }
 
+        if (answer.user.answers != null && answer.user.answers.size() == 4) {
+            def badge = new Badge(name: "talkative", user: answer.user).save()
+        }
+
+
         // Setting the date when we save
         answer.date = new Date()
-
-        println "${answer.date}"
 
         if (!answer.validate()) {
             transactionStatus.setRollbackOnly()
@@ -69,7 +68,7 @@ class AnswerController {
     }
 
     // Enables the user that created it to edit the content ONLY
-    // @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def edit(Answer answer) {
         respond answer, view: '_edit'
     }
@@ -109,12 +108,101 @@ class AnswerController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
-                redirect action:"index", method:"GET"
+                redirect action:'show', controller:'question', method:"GET", params: [id: answer.question.id]
             }
             '*'{ render status: NO_CONTENT }
         }
     }
 
+        // Accept the answer in the question
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def accept(Answer answer) {
+
+        if (answer == null) {
+            notFound()
+            return
+        }
+
+        // Check if there is already an accepted answer
+        def alreadyAccepted = answer?.question?.answers?.find{ it.accepted == true }
+
+        if(null != alreadyAccepted) {
+            // There is one, we revoke it and accept the new one
+            alreadyAccepted.accepted = false
+            alreadyAccepted.save flush:true
+        }
+
+        answer.accepted = true
+        answer.save flush:true
+        
+
+        redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
+    }
+
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def revoke(Answer answer) {
+
+        if (answer == null) {
+            notFound()
+            return
+        }
+
+        answer.accepted = false
+        answer.save flush:true
+
+        redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
+    }
+
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def upvote(Answer answer) {
+
+        if (answer == null) {
+            notFound()
+            return
+        }
+
+        // get the current user to manupulate him from the lists
+        long currentUserId = springSecurityService.currentUser.id
+
+        // Remove the user from the downVoters list to add it here
+        answer.downVoters -= currentUserId
+
+        // Add the user in the upVoters list
+        answer.upVoters += currentUserId
+
+        answer.save flush:true
+
+        // Redirect to show to update view and maybe ordering
+        redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
+    }
+
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def downvote(Answer answer) {
+
+        if (answer == null) {
+            notFound()
+            return
+        }
+
+        // get the current user to manupulate him from the lists
+        long currentUserId = springSecurityService.currentUser.id
+
+        // Remove the user from the downVoters list to add it here
+        answer.upVoters.remove(currentUserId)
+
+        // Add the user in the upVoters list
+        answer.downVoters.add(currentUserId)
+
+        answer.save flush:true
+
+        redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
+    }
+
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {

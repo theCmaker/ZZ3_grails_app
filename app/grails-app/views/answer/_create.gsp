@@ -11,6 +11,8 @@
             <f:field bean="answer" property="question" />
             <f:field bean="answer" property="user" />
             <f:field bean="answer" property="date" />
+            <f:field bean="answer" property="upVoters" />
+            <f:field bean="answer" property="downVoters" />
         </div>
 
         <!--Save the answer-->
