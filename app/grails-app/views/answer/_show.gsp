@@ -26,7 +26,9 @@
 
         <div class="col-xs-4 text-left">
             <i class="glyphicon glyphicon-user"></i>
-            <f:display bean="answer" property="user.username" />
+            <g:link controller="user" action="show" id="${answer.user.id}">
+                <f:display bean="answer" property="user.username" />
+            </g:link>
         </div>
 
         <div class="col-xs-4 text-center">
