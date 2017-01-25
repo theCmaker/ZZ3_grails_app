@@ -20,7 +20,7 @@
                 </g:each>
     
                 <button name="create" class="btn btn-success">
-                    <i class="glyphicon glyphicon-send"></i> <g:message code="default.button.save" />
+                    <i class="glyphicon glyphicon-send"></i> <g:message code="default.button.update.label" />
                 </button>
             </g:form>
 
