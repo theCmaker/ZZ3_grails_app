@@ -26,7 +26,7 @@ class Question implements Comparable {
     /// The title or the content cannot be blank
     static constraints = {
         title blank: false
-        content blank: false
+        content blank: false, widget: 'textarea'
     }
 
     int compareTo(other) {

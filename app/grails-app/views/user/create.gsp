@@ -23,7 +23,7 @@
                     <f:field bean="user" property="username"/>
                     <f:field bean="user" property="password"/>
                 </fieldset>
-                <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+                <g:submitButton name="create" class="save btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}" />
             </g:form>
         </div>
     </body>

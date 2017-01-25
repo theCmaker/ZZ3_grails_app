@@ -16,8 +16,10 @@
             <g:form resource="${this.answer}" method="PUT">
                 <g:hiddenField name="version" value="${this.answer?.version}" />
 
-                <!--Answer content to change-->
-                <f:field bean="answer" property="content" />
+                <div class="form-group">
+                    <!--Answer content to change-->
+                    <f:field bean="answer" property="content"/>
+                </div>
 
                 <input class="btn btn-success" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
             </g:form>

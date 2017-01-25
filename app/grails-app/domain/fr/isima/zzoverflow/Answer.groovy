@@ -20,7 +20,7 @@ class Answer implements Comparable {
 
     /// The question content cannot be blank
     static constraints = {
-        content blank: false
+        content blank: false, widget: 'textarea'
     }
 
     /// Override of Comparable to order the answers

@@ -34,8 +34,8 @@
                     <f:display bean="question" property="title" />
                 </h1>
 
-                <div class="content">
-                    <f:widget bean="question" property="content" />
+                <div class="form-group">
+                    <f:field bean="question" property="content" />
                 </div>
 
                 <!--Hidden fields-->
@@ -46,7 +46,9 @@
                     <f:field bean="question" property="user" />
                 </div>
 
-                <input class="save" type="submit" value="${message(code: 'default.question.update', default: 'Update')}" />
+                <button class="save btn btn-success" type="submit">
+                    <g:message code="default.question.update"/>
+                </button>
             </g:form>
         </div>
     </body>

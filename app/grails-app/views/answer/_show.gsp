@@ -33,7 +33,8 @@
 
         <div class="col-xs-4 text-center">
             <sec:ifLoggedIn>
-                <g:form class="btn-group" resource="${this.answer}" method="DELETE">
+                <g:form resource="${this.answer}" method="DELETE">
+                    <div class="btn-group">
                     <!--Acces only of creator or admin-->
                     <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.answer.user.id}">
                         <g:link class="btn btn-primary" action="edit" resource="${this.answer}">
@@ -61,9 +62,11 @@
 
                     <!--Acces only of creator or admin-->
                     <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.answer.user.id}">
-                        <!--<i class="glyphicon glyphicon-trash"></i>-->
-                        <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                        <button class="btn btn-danger" type="submit" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+                            <i class="glyphicon glyphicon-trash"></i> <g:message code="default.button.delete.label" /> 
+                        </button>
                     </sec:access>
+                    </div>
                 </g:form>
             </sec:ifLoggedIn>
         </div>

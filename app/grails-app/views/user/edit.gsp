@@ -34,7 +34,7 @@
 
                 
                 <div class="btn-group">
-                    <input class="btn btn-primary" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                    <input class="btn btn-success" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
                 </div>
                 
             </g:form>

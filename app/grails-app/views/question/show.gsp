@@ -41,21 +41,27 @@
             <div class="panel-footer row">
                     <div class="col-xs-4">
                         <i class="glyphicon glyphicon-user"></i>
-                        <f:display bean="question" property="user.username" />
+                        <g:link controller="user" action="show" id="${question.user.id}">
+                            <f:display bean="question" property="user.username" />
+                        </g:link>
                     </div>
 
                     <div class="col-xs-4 text-center">
                         <sec:ifLoggedIn>
                             <sec:access expression="hasRole('ROLE_ADMIN') || principal.id == ${this.question.user.id}">
-                                <g:form class="btn-group" resource="${this.question}" method="DELETE">
+                                <g:form resource="${this.question}" method="DELETE">
+                                    <div class="btn-group">
                                     <g:link class="btn btn-primary" action="edit" resource="${this.question}">
                                         <i class="glyphicon glyphicon-pencil"></i>
                                         <g:message code="default.button.edit.label" default="Edit" />
                                     </g:link>
 
                                     <sec:ifAnyGranted roles="ROLE_ADMIN" >
-                                        <input class="btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                                        <button class="btn btn-danger" type="submit" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+                                            <i class="glyphicon glyphicon-trash"></i> <g:message code="default.button.delete.label" />
+                                        </button>
                                     </sec:ifAnyGranted>
+                                    </div>
                                 </g:form>
                             </sec:access>
                         </sec:ifLoggedIn>

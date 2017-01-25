@@ -1,21 +1,22 @@
-<div class="form-group" role="main">
+<g:form action="save" class="form">
 
-    <g:form action="save" class="form-group">
+    <!--Hidden fields-->
+    <div class="hidden">
+        <f:field bean="answer" property="question" />
+        <f:field bean="answer" property="user" />
+        <f:field bean="answer" property="date" />
+        <f:field bean="answer" property="upVoters" />
+        <f:field bean="answer" property="downVoters" />
+    </div>
 
-        <!--Answer content-->
-        <label for="answerContent">${message(code: 'default.answer.label.content', default: 'Content')}</label>
-        <f:widget id="answerContent" class="form-control" bean="answer" property="content" />
+    <!--Answer content-->
+    <label for="answerContent">${message(code: 'default.answer.label.content', default: 'Content')}</label>
+    <div class="form-group">
+    <f:widget id="answerContent" class="form-control" bean="answer" property="content" />
+    </div>
 
-        <!--Hidden fields-->
-        <div class="hidden">
-            <f:field bean="answer" property="question" />
-            <f:field bean="answer" property="user" />
-            <f:field bean="answer" property="date" />
-            <f:field bean="answer" property="upVoters" />
-            <f:field bean="answer" property="downVoters" />
-        </div>
-
-        <!--Save the answer-->
-        <g:submitButton name="create" class="btn btn-success" value="${message(code: 'default.answer.answer', default: 'Create')}" />
-    </g:form>
-</div>
+    <!--Save the answer-->
+    <button name="create" class="btn btn-success">
+        <i class="glyphicon glyphicon-send"></i> <g:message code="default.answer.answer" />
+    </button>
+</g:form>

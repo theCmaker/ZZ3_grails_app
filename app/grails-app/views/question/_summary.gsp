@@ -44,6 +44,7 @@
                                 <i class="glyphicon glyphicon-thumbs-down"></i>
                             </g:link>
                         </sec:ifLoggedIn>
+                    </div>
                 </td>
             </tr>
         </g:each>

@@ -47,7 +47,9 @@
                 </div>
 
                 
-                <g:submitButton name="create" class="btn btn-success glyphicon glyphicon-send" value="${message(code: 'default.question.create', default: 'Create')}" />
+                <button name="create" class="btn btn-success">
+                    <i class="glyphicon glyphicon-send"></i> <g:message code="default.question.create"/>
+                </button>
             </g:form>
         </div>
     </body>
