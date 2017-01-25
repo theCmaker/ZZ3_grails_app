@@ -30,6 +30,14 @@ class BootStrap {
         // GroupRole.create modosGroup, Role.findByAuthority('ROLE_MODO')
 
 
+        new Feature(feature: Features.)
+QUESTION_VOTE, description: "", enabled: true
+QUESTION_CREATE, description: "", enabled: true
+ANSWER_VOTE, description: "", enabled: true
+ANSWER_CREATE, description: "", enabled: true
+USER_CREATE, description: "", enabled: true
+BADGE_FEATURE, description: "", enabled: true
+
         assert User.count() == 3
         assert Role.count() == 2
         assert Group.count() == 2
