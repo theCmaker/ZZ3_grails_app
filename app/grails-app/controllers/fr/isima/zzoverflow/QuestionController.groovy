@@ -29,14 +29,23 @@ class QuestionController {
     
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def create() {
-        def question = new Question()
 
-        bindData(question, params, [include: ['title', 'content']])
+        if(Feature.findByFeature(Features.QUESTION_CREATE).enabled) {
+            def question = new Question()
 
-        // We get the user now
-        question.user = User.get(springSecurityService.currentUser.id)
+            bindData(question, params, [include: ['title', 'content']])
 
-        respond question, view: 'create'
+            // We get the user now
+            question.user = User.get(springSecurityService.currentUser.id)
+
+            respond question, view: 'create'
+
+        } else {
+
+            render status: SERVICE_UNAVAILABLE
+
+        }
+
     }
 
     @Transactional
@@ -123,6 +132,28 @@ class QuestionController {
             '*'{ render status: NO_CONTENT }
         }
     }
+
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def vote(Question question) {
+
+        if(null == question) {
+            notFound()
+            return
+        }
+
+        if(Feature.findByFeature(Features.QUESTION_VOTE).enabled) {
+
+            respond question, view: '_vote'
+
+        } else {
+
+            respond question, view: '_vote_disabled'
+
+        }
+
+    }
+
 
     @Transactional
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])

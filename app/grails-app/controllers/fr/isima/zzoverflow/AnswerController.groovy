@@ -170,12 +170,19 @@ class AnswerController {
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def vote(Answer answer) {
 
+        if(null == answer) {
+            notFound();
+            return
+        }
+
         if(Feature.findByFeature(Features.ANSWER_VOTE).enabled) {
 
             respond answer, view: '_vote'
 
         } else {
-            render status: SERVICE_UNAVAILABLE
+
+            respond answer, view: '_vote_disabled'
+
         }
     }
 
