@@ -194,9 +194,9 @@ fieldset,
     zoom: 1;
 }
 
-.fieldcontain {
+/*.fieldcontain {
     margin-top: 1em;
-}
+}*/
 
 .fieldcontain label,
 .fieldcontain .property-label {

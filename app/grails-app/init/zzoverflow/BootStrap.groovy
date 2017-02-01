@@ -30,6 +30,13 @@ class BootStrap {
         // GroupRole.create modosGroup, Role.findByAuthority('ROLE_MODO')
 
 
+		new Feature(feature: Features.QUESTION_VOTE, description: "Allow a user to vote for a question", enabled: true).save(flush: true)
+		new Feature(feature: Features.QUESTION_CREATE, description: "Allow a user to ask a question", enabled: true).save(flush: true)
+		new Feature(feature: Features.ANSWER_VOTE, description: "Allow a user to vote for an answer", enabled: true).save(flush: true)
+		new Feature(feature: Features.ANSWER_CREATE, description: "Allow a user to answer a question", enabled: true).save(flush: true)
+		new Feature(feature: Features.USER_CREATE, description: "Allow creating new users", enabled: true).save(flush: true)
+		new Feature(feature: Features.BADGE_FEATURE, description: "Enable badge rewarding system", enabled: true).save(flush: true)
+
         assert User.count() == 3
         assert Role.count() == 2
         assert Group.count() == 2
