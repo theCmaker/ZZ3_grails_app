@@ -20,51 +20,62 @@ class AnswerController {
 
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def create() {
-        // Create a new answer
-        def answer = new Answer()
+        if(Feature.findByFeature(Features.ANSWER_CREATE).enabled) {
 
-        // Initialize the answer fields with only the content 
-        bindData(answer, params, [include: 'content'])
+            // Create a new answer
+            def answer = new Answer()
 
-        // Get the question from the request param
-        answer.question = Question.get(params.id)
+            // Initialize the answer fields with only the content 
+            bindData(answer, params, [include: 'content'])
 
-        // Get the user from the current session
-        answer.user = User.get(springSecurityService.currentUser.id)
+            // Get the question from the request param
+            answer.question = Question.get(params.id)
 
-        // Send to the _create view
-        respond answer, view: '_create'
+            // Get the user from the current session
+            answer.user = User.get(springSecurityService.currentUser.id)
+
+            // Send to the _create view
+            respond answer, view: '_create'
+        } else {
+            render status: SERVICE_UNAVAILABLE
+        }
+
     }
 
     @Transactional
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def save(Answer answer) {
 
-        if (answer == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
+        if(Feature.findByFeature(Features.ANSWER_CREATE).enabled) {
+
+            if (answer == null) {
+                transactionStatus.setRollbackOnly()
+                notFound()
+                return
+            }
+
+            if (answer.user.answers != null && answer.user.answers.size() == 4) {
+                def badge = new Badge(name: "talkative", user: answer.user).save()
+            }
+
+
+            // Setting the date when we save
+            answer.date = new Date()
+
+            if (!answer.validate()) {
+                transactionStatus.setRollbackOnly()
+                respond answer.errors, view:'_create'
+                return
+            }
+
+            // Save the new answer
+            answer.save(flush:true, failOnError: true)
+            
+            // Redirect to the question show view
+            redirect action:'show', controller: 'question', method: 'GET', params: [id: answer.question.id]
+        } else {
+            render status: SERVICE_UNAVAILABLE
         }
-
-        if (answer.user.answers != null && answer.user.answers.size() == 4) {
-            def badge = new Badge(name: "talkative", user: answer.user).save()
-        }
-
-
-        // Setting the date when we save
-        answer.date = new Date()
-
-        if (!answer.validate()) {
-            transactionStatus.setRollbackOnly()
-            respond answer.errors, view:'_create'
-            return
-        }
-
-        // Save the new answer
-        answer.save(flush:true, failOnError: true)
-        
-        // Redirect to the question show view
-        redirect action:'show', controller: 'question', method: 'GET', params: [id: answer.question.id]
     }
 
     // Enables the user that created it to edit the content ONLY
@@ -157,49 +168,72 @@ class AnswerController {
 
     @Transactional
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def vote(Answer answer) {
+
+        if(Feature.findByFeature(Features.ANSWER_VOTE).enabled) {
+
+            respond answer, view: '_vote'
+
+        } else {
+            render status: SERVICE_UNAVAILABLE
+        }
+    }
+
+    @Transactional
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def upvote(Answer answer) {
 
-        if (answer == null) {
-            notFound()
-            return
+        if(Feature.findByFeature(Features.ANSWER_VOTE).enabled) {
+
+            if (answer == null) {
+                notFound()
+                return
+            }
+
+            // get the current user to manupulate him from the lists
+            long currentUserId = springSecurityService.currentUser.id
+
+            // Remove the user from the downVoters list to add it here
+            answer.downVoters -= currentUserId
+
+            // Add the user in the upVoters list
+            answer.upVoters += currentUserId
+
+            answer.save flush:true
+
+            // Redirect to show to update view and maybe ordering
+            redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
+        } else {
+            render status: SERVICE_UNAVAILABLE
         }
-
-        // get the current user to manupulate him from the lists
-        long currentUserId = springSecurityService.currentUser.id
-
-        // Remove the user from the downVoters list to add it here
-        answer.downVoters -= currentUserId
-
-        // Add the user in the upVoters list
-        answer.upVoters += currentUserId
-
-        answer.save flush:true
-
-        // Redirect to show to update view and maybe ordering
-        redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
     }
 
     @Transactional
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def downvote(Answer answer) {
 
-        if (answer == null) {
-            notFound()
-            return
+        if(Feature.findByFeature(Features.ANSWER_VOTE).enabled) {
+
+            if (answer == null) {
+                notFound()
+                return
+            }
+
+            // get the current user to manupulate him from the lists
+            long currentUserId = springSecurityService.currentUser.id
+
+            // Remove the user from the downVoters list to add it here
+            answer.upVoters.remove(currentUserId)
+
+            // Add the user in the upVoters list
+            answer.downVoters.add(currentUserId)
+
+            answer.save flush:true
+
+            redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
+        } else {
+            render status: SERVICE_UNAVAILABLE
         }
-
-        // get the current user to manupulate him from the lists
-        long currentUserId = springSecurityService.currentUser.id
-
-        // Remove the user from the downVoters list to add it here
-        answer.upVoters.remove(currentUserId)
-
-        // Add the user in the upVoters list
-        answer.downVoters.add(currentUserId)
-
-        answer.save flush:true
-
-        redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
     }
 
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])

@@ -1,5 +1,7 @@
 package fr.isima.zzoverflow
 
+import fr.isima.zzoverflow.Features;
+
 /// Represent a feature provided by the app
 class Feature {
 
@@ -14,4 +16,6 @@ class Feature {
 
     static constraints = {
     }
+    
 }
+
