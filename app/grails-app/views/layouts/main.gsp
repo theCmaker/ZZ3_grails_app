@@ -32,6 +32,16 @@
                 <ul class="nav navbar-nav navbar-right">
                     <g:pageProperty name="page.nav" />
                     <sec:ifLoggedIn>
+
+                        <sec:ifAnyGranted roles="ROLE_ADMIN" >
+                            <li>
+                                <g:link controller="feature" action="index">
+                                    <i class="glyphicon glyphicon-tasks"></i>
+                                    <g:message code="default.feature.button" default="Features" />
+                                </g:link>
+                            </li>
+                        </sec:ifAnyGranted>
+
                         <li class="login">
                             <g:link controller="user" action="show" params="[id: sec.loggedInUserInfo(field:'id')]" >
                                 <i class="glyphicon glyphicon-user"></i> ${message(code: 'default.loggin.greeting', default: 'You are')} <sec:username/>

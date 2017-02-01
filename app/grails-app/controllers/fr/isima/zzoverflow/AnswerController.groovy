@@ -20,6 +20,7 @@ class AnswerController {
 
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def create() {
+
         if(Feature.findByFeature(Features.ANSWER_CREATE).enabled) {
 
             // Create a new answer
@@ -37,7 +38,9 @@ class AnswerController {
             // Send to the _create view
             respond answer, view: '_create'
         } else {
+
             render status: SERVICE_UNAVAILABLE
+
         }
 
     }
@@ -74,7 +77,9 @@ class AnswerController {
             // Redirect to the question show view
             redirect action:'show', controller: 'question', method: 'GET', params: [id: answer.question.id]
         } else {
+
             render status: SERVICE_UNAVAILABLE
+
         }
     }
 
@@ -211,7 +216,9 @@ class AnswerController {
             // Redirect to show to update view and maybe ordering
             redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
         } else {
+
             render status: SERVICE_UNAVAILABLE
+
         }
     }
 
@@ -239,7 +246,9 @@ class AnswerController {
 
             redirect action:'show', controller:'question', method: 'GET', params: [id: answer.question.id]
         } else {
+
             render status: SERVICE_UNAVAILABLE
+            
         }
     }
 

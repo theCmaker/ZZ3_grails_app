@@ -20,37 +20,52 @@ class BadgeController {
 
     @Secured(['ROLE_MODO', 'ROLE_ADMIN'])
     def create() {
-        // Create a new answer
-        def badge = new Badge()
 
-        // Initialize the answer fields with only the content 
-        bindData(badge, params, [include: 'user.id'])
+        if(Feature.findByFeature(Features.BADGE_FEATURE).enabled) {
 
-        // Send to the _create view
-        respond badge, view: 'create'
+            // Create a new answer
+            def badge = new Badge()
+
+            // Initialize the answer fields with only the content 
+            bindData(badge, params, [include: 'user.id'])
+
+            // Send to the _create view
+            respond badge, view: 'create'
+        } else {
+
+            render status: SERVICE_UNAVAILABLE
+
+        }
     }
 
     @Transactional
     @Secured(['ROLE_MODO', 'ROLE_ADMIN'])
     def save(Badge badge) {
 
-        if (badge == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
+        if(Feature.findByFeature(Features.BADGE_FEATURE).enabled) {
 
-        if (!badge.validate()) {
-            transactionStatus.setRollbackOnly()
-            respond badge.errors, view:'create'
-            return
-        }
+            if (badge == null) {
+                transactionStatus.setRollbackOnly()
+                notFound()
+                return
+            }
 
-        // Save the new badge
-        badge.save(flush:true, failOnError: true)
-        
-        // Redirect to the question show view
-        //redirect action:'show', controller: 'question', method: 'GET', params: [id: answer.question.id]
+            if (!badge.validate()) {
+                transactionStatus.setRollbackOnly()
+                respond badge.errors, view:'create'
+                return
+            }
+
+            // Save the new badge
+            badge.save(flush:true, failOnError: true)
+            
+            // Redirect to the question show view
+            //redirect action:'show', controller: 'question', method: 'GET', params: [id: answer.question.id]
+        } else {
+
+            render status: SERVICE_UNAVAILABLE
+
+        }
     }
 
     @Secured(['ROLE_MODO','ROLE_ADMIN'])

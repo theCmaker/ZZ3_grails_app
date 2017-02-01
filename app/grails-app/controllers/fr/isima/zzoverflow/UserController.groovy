@@ -26,36 +26,51 @@ class UserController {
 
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def create() {
-        respond new User(params)
+        if(Feature.findByFeature(Features.USER_CREATE).enabled) {
+
+            respond new User(params)
+
+        } else {
+            
+            render status: SERVICE_UNAVAILABLE
+
+        }
     }
 
     @Transactional
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def save(User user) {
 
-        if (user == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        } 
+        if(Feature.findByFeature(Features.USER_CREATE).enabled) {
 
-        if (user.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond user.errors, view:'create'
-            return
-        }
+            if (user == null) {
+                transactionStatus.setRollbackOnly()
+                notFound()
+                return
+            } 
 
-        user.save flush:true
-
-        // Set default rights
-        UserGroup.create user, Group.findByName('Users');
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
-                redirect(uri: "/login/auth")
+            if (user.hasErrors()) {
+                transactionStatus.setRollbackOnly()
+                respond user.errors, view:'create'
+                return
             }
-            '*' { respond user, [status: CREATED] }
+
+            user.save flush:true
+
+            // Set default rights
+            UserGroup.create user, Group.findByName('Users');
+
+            request.withFormat {
+                form multipartForm {
+                    flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
+                    redirect(uri: "/login/auth")
+                }
+                '*' { respond user, [status: CREATED] }
+            }
+        } else {
+
+            render status: SERVICE_UNAVAILABLE
+
         }
     }
 
