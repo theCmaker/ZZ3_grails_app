@@ -23,6 +23,12 @@ class QuestionController {
         respond Question.list(params), model:[questionCount: Question.count()], view: '_index'
     }
 
+
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+    def list() {
+        respond Question.list(), model:[questions: Question.list()], view: '_summary'
+    }
+
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def show(Question question) {
         def auth = springSecurityService.principal
