@@ -1,0 +1,34 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a ui-sref="index" class="home">Home</a></li>
+        <li><a ui-sref="badge.create" class="create">New Badge</a></li>
+    </ul>
+</div>
+<div id="list-badge" class="content scaffold-list" role="main">
+    <h1>Badge List</h1>
+    <table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>User</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-class="{'even': $index%2 == 0, 'odd': $index%2 == 1}" ng-repeat="badge in vm.badgeList">
+      <td>
+        <a ui-sref="badge.show({id: badge.id})">{{badge.id}}</a>
+      </td>
+      <td>
+        <span>{{badge.name}}</span>
+      </td>
+      <td>
+        <a ui-sref="user.show({id: badge.user.id})">{{badge.user.toString()}}</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    <!--    <div class="pagination">
+            <g:paginate total="${partCount ?: 0}" />
+        </div>-->
+</div>
