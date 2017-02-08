@@ -10,16 +10,32 @@
       Welcome to ZZoverflow
     </h1>
 
-    <question>Loading...</question>
-
     <p>
-      Congratulations, you have successfully started your first Grails application! At the moment
-      this is the default page, feel free to modify it to either redirect to a controller or display
-      whatever content you may choose. Below is a list of controllers that are currently deployed in
-      this application, click on each to execute its default action:
+      You can ask anything. Except a Million $...
     </p>
 
     
+    <!--Displaying the questions in a table-->
+    <table>
+      <thead>
+        <th>Title</th>
+        <th>User</th>
+        <th>Date</th>
+        <th>Votes</th>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let question of questionsList">
+          <td>{{question.title}}</td>
+          <td>{{question.user}}</td>
+          <td>{{question.date}}</td>
+          <td>{{question.vote}}</td>
+        </tr>
+      </tbody>
+
+
+    </table>
+
   </section>
 
 </div>

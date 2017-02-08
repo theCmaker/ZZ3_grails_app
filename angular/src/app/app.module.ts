@@ -12,7 +12,9 @@ import { rootRouterConfig } from './app.routes';
 import { NavComponent } from './nav/nav.component';
 
 import { QuestionComponent } from './question/question.component'
-import {QuestionService} from './question/question.service'
+import { QuestionService } from './question/question.service'
+
+import {UserService} from './user/user.service'
 
 @NgModule({
   declarations: [
@@ -28,7 +30,7 @@ import {QuestionService} from './question/question.service'
     RouterModule.forRoot(rootRouterConfig),
     NgbModule.forRoot()
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, QuestionService],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, QuestionService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,7 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Route, Router} from '@angular/router';
 
 import {QuestionComponent} from '../question/question.component'
-import {QuestionService} from '../question/question.service'
+import { QuestionService } from '../question/question.service'
+
+import {UserService} from '../user/user.service'
 
 @Component({
   selector: 'app-index',
@@ -12,15 +14,22 @@ import {QuestionService} from '../question/question.service'
 })
 export class IndexComponent implements OnInit {
 
-  controllers: Array<any>;
 
-  _listData: any;
+  questionsList: Array<any>;
 
-  constructor(private questionService : QuestionService, private router: Router) { }
+  constructor(private questionService: QuestionService,
+    private userService: UserService,  
+    private router: Router) { }
 
   ngOnInit(): void {
     this.questionService.getList().subscribe(res => {
-      this._listData = res;
+      this.questionsList = res;
+
+      this.questionsList.forEach((val, idx, arr) => {
+        val.user = UserService.getUserById()
+      });
+
+
       console.log(res);
     });
   }
