@@ -1,0 +1,14 @@
+<fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="name">Name
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="name" id="name" ng-model="vm.badge.name" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="user">User
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="user" id="user" ng-model="vm.badge.user" ng-options="user for user in vm.userList track by user.id"></select>
+  </div>
+</fieldset>
