@@ -10,13 +10,16 @@ import { IndexComponent } from './index/index.component';
 import { AppComponent } from './app.component';
 import { rootRouterConfig } from './app.routes';
 import { NavComponent } from './nav/nav.component';
-import { NavService } from './nav/nav.service';
+
+import { QuestionComponent } from './question/question.component'
+import {QuestionService} from './question/question.service'
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    IndexComponent
+    IndexComponent,
+    QuestionComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,7 @@ import { NavService } from './nav/nav.service';
     RouterModule.forRoot(rootRouterConfig),
     NgbModule.forRoot()
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, QuestionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
