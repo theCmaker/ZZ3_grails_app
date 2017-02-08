@@ -7,6 +7,10 @@ import grails.plugin.springsecurity.*
 import grails.plugin.springsecurity.annotation.*
 
 class FeatureController {
+    static responseFormats = [
+        'json',
+        'xml'
+    ]
 
 	def springSecurityService
 

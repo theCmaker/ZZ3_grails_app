@@ -8,6 +8,10 @@ import grails.plugin.springsecurity.annotation.*
 
 @Transactional(readOnly = true)
 class AnswerController {
+    static responseFormats = [
+        'json',
+        'xml'
+    ]
 
     def springSecurityService
 

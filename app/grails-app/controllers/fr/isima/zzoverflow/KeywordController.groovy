@@ -5,6 +5,10 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class KeywordController {
+    static responseFormats = [
+        'json',
+        'xml'
+    ]
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
