@@ -29,7 +29,7 @@ class KeywordController {
     def save(Keyword keyword) {
         if (keyword == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -58,7 +58,7 @@ class KeywordController {
     def update(Keyword keyword) {
         if (keyword == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -84,7 +84,7 @@ class KeywordController {
 
         if (keyword == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -99,13 +99,4 @@ class KeywordController {
         }
     }
 
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'keyword.label', default: 'Keyword'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
 }

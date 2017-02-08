@@ -50,7 +50,7 @@ class BadgeController {
 
             if (badge == null) {
                 transactionStatus.setRollbackOnly()
-                notFound()
+                render status: NOT_FOUND
                 return
             }
 
@@ -83,7 +83,7 @@ class BadgeController {
     def update(Badge badge) {
         if (badge == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -103,7 +103,7 @@ class BadgeController {
 
         if (badge == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -118,14 +118,4 @@ class BadgeController {
         }
     }
 
-    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'badge.label', default: 'Badge'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
 }
