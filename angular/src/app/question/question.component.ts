@@ -1,24 +1,22 @@
 import {Component} from '@angular/core';
 import {QuestionService} from './question.service';
-import {OnInit} from '@angular/core';
+
 
 @Component({
   selector: 'question',
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.css']
 })
-export class QuestionComponent implements OnInit {
+export class QuestionComponent {
 
   applicationData: any;
 
-  constructor(private questionService : QuestionService) { }
+  title: string;
 
-  ngOnInit(): void {
-    this.questionService.getList().subscribe(res => {
-
-      this.applicationData = res
-      console.log(this.applicationData);
-    });
+  constructor(private questionService: QuestionService) {
+    this.title = "Toto";
   }
+
+  
 
 }
