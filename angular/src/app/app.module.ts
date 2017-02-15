@@ -6,15 +6,19 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
+// Components
+import { rootRouterConfig } from './app.routes';
 import { IndexComponent } from './index/index.component';
 import { AppComponent } from './app.component';
-import { rootRouterConfig } from './app.routes';
 import { NavComponent } from './nav/nav.component';
-
 import { QuestionComponent } from './question/question.component'
-import { QuestionService } from './question/question.service'
 
-import {UserService} from './user/user.service'
+// Services
+import { AnswerService } from './answer/answer.service'
+import { BadgeService } from './badge/badge.service'
+import { FeatureService } from './feature/feature.service'
+import { QuestionService } from './question/question.service'
+import { UserService } from './user/user.service'
 
 @NgModule({
   declarations: [
@@ -30,7 +34,12 @@ import {UserService} from './user/user.service'
     RouterModule.forRoot(rootRouterConfig),
     NgbModule.forRoot()
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, QuestionService, UserService],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy },
+    AnswerService,
+    BadgeService,
+    FeatureService,
+    QuestionService,
+    UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

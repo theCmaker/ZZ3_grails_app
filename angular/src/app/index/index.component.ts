@@ -26,7 +26,11 @@ export class IndexComponent implements OnInit {
       this.questionsList = res;
 
       this.questionsList.forEach((val, idx, arr) => {
-        val.user = UserService.getUserById()
+
+        this.userService.getUserById(val.user.id).subscribe(res => {
+          console.log(res);
+          val.user = res;
+        });
       });
 
 
