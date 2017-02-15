@@ -1,6 +1,6 @@
 <div class="svg" role="presentation">
   <div class="grails-logo-container">
-    <img class="grails-logo" src="../../images/grails-cupsonly-logo-white.svg"> <span style="font-size: 10rem;margin-left: -100px;margin-right: -13px;">+</span>
+    <img class="grails-logo" src="../../images/grails-cupsonly-logo-white.svg">
   </div>
 </div>
 
@@ -26,10 +26,10 @@
 
       <tbody>
         <tr *ngFor="let question of questionsList">
-          <td>{{question.title}}</td>
-          <td>{{question.user.username}}</td>
-          <td>{{question.date}}</td>
-          <td>{{question.vote}}</td>
+          <td>{{question.getTitle()}}</td>
+          <td>{{question.getUser().getUsername()}}</td>
+          <td>{{question.getDate()}}</td>
+          <td>  </td>
         </tr>
       </tbody>
 

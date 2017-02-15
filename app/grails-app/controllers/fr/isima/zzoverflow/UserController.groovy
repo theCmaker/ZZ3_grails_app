@@ -24,6 +24,11 @@ class UserController {
     }
 
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+    def list() {
+        respond User.list()
+    }
+
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def show(User user) {
         respond user
     }

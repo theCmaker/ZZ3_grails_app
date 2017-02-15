@@ -17,6 +17,7 @@ import { BadgeComponent } from './badge/badge.component'
 import { FeatureComponent } from './feature/feature.component'
 import { QuestionComponent } from './question/question.component'
 import { UserComponent } from './user/user.component'
+import { VoteComponent } from './vote/vote.component'
 
 // Services
 import { AnswerService } from './answer/answer.service'
@@ -30,7 +31,12 @@ import { UserService } from './user/user.service'
     AppComponent,
     NavComponent,
     IndexComponent,
-    QuestionComponent
+    AnswerComponent,
+    BadgeComponent,
+    FeatureComponent,
+    QuestionComponent,
+    UserComponent,
+    VoteComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,9 @@ import { Route, Router } from '@angular/router';
 
 import { QuestionComponent } from '../question/question.component'
 import { QuestionService } from '../question/question.service'
+import { Question } from '../question/question'
+
+import { VoteComponent } from '../vote/vote.component'
 
 import { UserService } from '../user/user.service'
 
@@ -10,31 +13,51 @@ import { UserService } from '../user/user.service'
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.css'],
-  entryComponents: [QuestionComponent]
+  entryComponents: [QuestionComponent, VoteComponent]
 })
 export class IndexComponent implements OnInit {
 
 
-  questionsList: Array<any>;
+  questionsList: Array<Question>;
 
   constructor(private questionService: QuestionService,
     private userService: UserService,
-    private router: Router) { }
+    private router: Router) {
+
+    this.questionsList = new Array<Question>();
+    
+  }
 
   ngOnInit(): void {
     this.questionService.getList().subscribe(res => {
-      this.questionsList = res;
+      console.log('ininit');
 
-      this.questionsList.forEach((val, idx, arr) => {
+      // TODO : create Question instances, create user instances, store answers, change template and input the question in the vote component
 
-        this.userService.getUserById(val.user.id).subscribe(res => {
-          console.log(res);
-          val.user = res;
-        });
+      res.forEach((val, idx, arr) => {
+
+        console.log('Index init')        
+        console.log(val);
+
+        this.questionsList.push(
+          new Question(
+            val["id"],
+            val["title"],
+            val["content"],
+            val["answers"],
+            val["date"],
+            val["downVoters"],
+            val["upvoters"],
+            val["user"]
+          )
+        );
+
+
+        
       });
 
-
-      console.log(res);
+      console.log('questionsList');
+      console.log(this.questionsList);
     });
   }
 
