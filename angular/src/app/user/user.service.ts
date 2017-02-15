@@ -8,7 +8,9 @@ import {Observable} from 'rxjs';
 @Injectable()
 export class UserService {
 
-    _user : Observable<any>
+    _user: Observable<any>
+    
+    _userList: Observable<any>;
 
     constructor(private http: Http) { }
 
@@ -21,5 +23,16 @@ export class UserService {
         }
 
         return this._user;
+    }
+
+    getList(): Observable<any> {
+        
+        if (!this._userList) {
+            this._userList = this.http.get('http://localhost:8080/user/list')
+                .map((res: Response) => res.json())
+                .cache();
+        }
+
+        return this._userList;
     }
 }

@@ -2,26 +2,24 @@ import { UserService } from '../user/user.service'
 
 export class Question {
 
-    private userService: UserService;
-
-    id: Number;
-    title: String;
-    content: String;
+    id: number;
+    title: string;
+    content: string;
     answers: Array<Number>;
     date: Date;
     downVoters: Array<Number>;
     upVoters: Array<Number>;
-    user: Number;
+    user: number;
 
     constructor(
-        id: Number,
-        title: String,
-        content: String,
+        id: number,
+        title: string,
+        content: string,
         answers: Array<Number>,
         date: Date,
         downVoters: Array<Number>,
         upVoters: Array<Number>,
-        user: Number,
+        user: number,
     ) {
         this.id = id;
         this.title = title;
@@ -33,21 +31,14 @@ export class Question {
         this.user = user;
     }
     
-    getScore(): Number {
+    getScore(): number {
         return this.upVoters.length - this.downVoters.length
     }
     
     getUser(): any {
         // @TODO : create a user instance
 
-        var a;
-
-        this.userService.getUserById(this.user).subscribe(res => {
-            console.log(res);
-            a = res;  
-        });
-
-        return a;
+        
     }
 
 }
