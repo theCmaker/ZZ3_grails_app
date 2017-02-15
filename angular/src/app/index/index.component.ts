@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Route, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 
-import {QuestionComponent} from '../question/question.component'
+import { QuestionComponent } from '../question/question.component'
 import { QuestionService } from '../question/question.service'
 
-import {UserService} from '../user/user.service'
+import { UserService } from '../user/user.service'
 
 @Component({
   selector: 'app-index',
@@ -18,7 +18,7 @@ export class IndexComponent implements OnInit {
   questionsList: Array<any>;
 
   constructor(private questionService: QuestionService,
-    private userService: UserService,  
+    private userService: UserService,
     private router: Router) { }
 
   ngOnInit(): void {
