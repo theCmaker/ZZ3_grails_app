@@ -22,6 +22,11 @@ class BadgeController {
         respond badge, view: '_show'
     }
 
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+    def list() {
+        respond Badge.list()
+    }
+
     @Secured(['ROLE_MODO', 'ROLE_ADMIN'])
     def create() {
 

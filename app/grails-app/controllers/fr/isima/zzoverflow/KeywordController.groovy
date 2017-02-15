@@ -3,6 +3,9 @@ package fr.isima.zzoverflow
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+import grails.plugin.springsecurity.*
+import grails.plugin.springsecurity.annotation.*
+
 @Transactional(readOnly = true)
 class KeywordController {
     static responseFormats = [
@@ -15,6 +18,11 @@ class KeywordController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Keyword.list(params), model:[keywordCount: Keyword.count()]
+    }
+
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+    def list() {
+        respond Keyword.list()
     }
 
     def show(Keyword keyword) {

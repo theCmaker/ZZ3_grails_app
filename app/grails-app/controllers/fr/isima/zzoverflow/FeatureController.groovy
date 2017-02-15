@@ -22,6 +22,11 @@ class FeatureController {
         respond Feature.list(params)
     }
 
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+    def list() {
+        respond Feature.list()
+    }
+
     @Transactional
     @Secured(['ROLE_ADMIN'])
     def enable(Feature feature) {

@@ -22,6 +22,11 @@ class AnswerController {
         respond answer, view: '_show'
     }
 
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+    def list() {
+        respond Answer.list()
+    }
+
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def create() {
 
