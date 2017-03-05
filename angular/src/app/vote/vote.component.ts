@@ -7,6 +7,9 @@ import 'rxjs/add/operator/switchMap';
 import { QuestionService } from '../question/question.service'
 import { Question } from '../question/question'
 
+import { AnswerService } from '../answer/answer.service'
+import { Answer } from '../answer/answer'
+
 @Component({
     selector: 'vote',
     templateUrl: 'vote.component.html',
@@ -17,23 +20,33 @@ export class VoteComponent implements OnInit {
 
     // the question ID    
     @Input() id: number;
+    @Input() isQuestion: boolean = false;
 
-    question: Question;
+    entity: Question|Answer;
 
     constructor(
         private questionService: QuestionService,
+        private answerService : AnswerService,
         private route: ActivatedRoute,
         private location : Location
     ) { }
 
     ngOnInit() {
-        this.route.params
-            .switchMap((params: Params) => this.questionService.getQuestionById(this.id))
-            .subscribe(res => { this.question = res; });
+
+        //Fetching from answers or questions
+        console.log("vote component for question " + this.isQuestion);
+
+        if (this.isQuestion) {
+            this.questionService.getQuestionById(this.id).subscribe(res => { this.entity = res; });
+            
+        } else {
+            this.answerService.getAnswerById(this.id).subscribe(res => { this.entity = res; });
+
+        }
     }
 
     getScore(): number {
-        return this.question.getScore();
+        return this.entity.getScore();
     }
 
     upVote(): void {

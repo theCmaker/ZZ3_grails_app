@@ -33,7 +33,7 @@ export class UserService {
         return this._data;
     }
 
-    getUserById(id: Number): Observable<User> {
+    getUserById(id: number): Observable<User> {
         console.log('user id')
         console.log(id)
         return this.getList().flatMap(x => x).find(u => {
