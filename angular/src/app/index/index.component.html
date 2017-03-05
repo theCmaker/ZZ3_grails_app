@@ -14,7 +14,7 @@
       You can ask anything. Except a Million $...
     </p>
 
-    
+
     <!--Displaying the questions in a table-->
     <table class="table">
       <thead>
@@ -28,9 +28,15 @@
         <tr *ngFor="let question of questionsList">
           <td>
             <!--Link to QuestionComponent having id in @Input()-->
-            <a [routerLink]="['/question', question.id]">{{question.title}}</a>
+            <a [routerLink]="['/question', question.id]">
+              {{question.title}}
+            </a>
           </td>
-          <td>{{this.getUserById(question.user).username}}</td>
+          <td>
+            <a [routerLink]="['/user', question.user]">
+              {{this.getUserById(question.user).username}}
+            </a>
+          </td>
           <td>{{question.date}}</td>
           <td>
             <vote [id]="question.id" [isQuestion]="true"> </vote>

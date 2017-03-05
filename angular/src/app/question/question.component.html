@@ -1,6 +1,25 @@
+<!--Question-->
 <h1>
     {{question.title}}
 </h1>
 <p>
     {{question.content}}
 </p>
+
+<!--Answers already here-->
+
+<div *ngFor="let answerId of question.answers" >
+    
+    <answer [id]="answerId"></answer>
+
+</div>
+
+<!--New answer to create-->
+<form id=formId (ngSubmit)="createAnswer()" #refForm="ngForm">
+    <div>
+        <label for="content">Content</label>
+        <textarea name="content" rows="4" placeholder="Answer here..."></textarea>
+    </div>
+
+    <button name="create" class="btn btn-success">Answer</button>
+</form>
