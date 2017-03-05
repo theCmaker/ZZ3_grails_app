@@ -23,25 +23,24 @@ export class IndexComponent implements OnInit {
   questionsList: Array<Question>;
   usersList: Array<User>;
 
-  constructor(private questionService: QuestionService,
+  constructor(
+    private questionService: QuestionService,
     private userService: UserService,
-    private router: Router) {
-
-    this.questionsList = new Array<Question>();
-    this.usersList = new Array<User>();
-
-  }
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.userService.getList().subscribe(res => {
       this.usersList = res;
     });
 
-    // Getting all the entities
     this.questionService.getList().subscribe(res => {
       this.questionsList = res;
     });
+  }
 
+  getUserById(id: number): User {
+    return this.usersList.find(u => u.id == id);
   }
 
   hasRoute(controllerName: string): boolean {

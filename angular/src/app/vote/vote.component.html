@@ -1,17 +1,19 @@
 <div>
     <div>
-        <button type="button" ng-click="vote.upVote()">
+        <button (click)="upVote()">
             +
         </button>
+        
     </div>
 
     <div>
-        {{question.getScore()}}
+        {{getScore()}}
     </div>
 
     <div>
-        <button type="button" ng-click="vote.downVote()">
+        <button (click)="downVote()">
             -
         </button>
+        
     </div>
 </div>

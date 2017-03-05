@@ -34,6 +34,8 @@ export class UserService {
     }
 
     getUserById(id: Number): Observable<User> {
+        console.log('user id')
+        console.log(id)
         return this.getList().flatMap(x => x).find(u => {
             return u.id == id;
         });

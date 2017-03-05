@@ -31,7 +31,7 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params
-      .switchMap((params: Params) => this.questionService.getQuestionById(+params['id'])).subscribe(res => { this.question = res; console.log("init component"); console.log(res) });
+      .switchMap((params: Params) => this.questionService.getQuestionById(+params['id'])).subscribe(res => { this.question = res; });
     }
 
 }

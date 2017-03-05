@@ -16,7 +16,7 @@
 
     
     <!--Displaying the questions in a table-->
-    <table>
+    <table class="table">
       <thead>
         <th>Title</th>
         <th>User</th>
@@ -27,11 +27,19 @@
       <tbody>
         <tr *ngFor="let question of questionsList">
           <td>
+            <!--Link to QuestionComponent having id in @Input()-->
             <a [routerLink]="['/question', question.id]">{{question.title}}</a>
           </td>
-          <td>{{question.user}}</td>
+          <td>{{this.getUserById(question.user).username}}</td>
           <td>{{question.date}}</td>
-          <td> {{question.id}} </td>
+          <td>
+            <vote [id]="question.id"> </vote>
+            <!--
+            <button (click)="event-handler()">Down</button>
+            {{question.getScore()}}
+            <button (click)="onClick()">Up</button>
+            -->
+          </td>
         </tr>
       </tbody>
 

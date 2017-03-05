@@ -17,7 +17,7 @@ export class Question {
         date: Date,
         downVoters: Array<Number>,
         upVoters: Array<Number>,
-        user: number,
+        user: number
     ) {
         this.id = id;
         this.title = title;
