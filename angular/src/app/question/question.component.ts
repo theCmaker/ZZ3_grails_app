@@ -10,7 +10,7 @@ import { Question } from './question';
 @Component({
   selector: 'question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css']
+  styleUrls: ['./question.component.css'],
 })
   
 export class QuestionComponent implements OnInit {
@@ -31,7 +31,7 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params
-      .switchMap((params: Params) => this.questionService.getQuestionById(+params['id'])).subscribe(res => { this.question = res });
+      .switchMap((params: Params) => this.questionService.getQuestionById(+params['id'])).subscribe(res => { this.question = res; console.log("init component"); console.log(res) });
     }
 
 }
