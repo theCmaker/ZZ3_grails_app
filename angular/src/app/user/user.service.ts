@@ -1,38 +1,41 @@
-import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+
+import { User } from './user';
 
 import 'rxjs/add/operator/cache';
 import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs';
+import 'rxjs/Rx';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class UserService {
 
-    _user: Observable<any>
-    
-    _userList: Observable<any>;
+    _userUrl: string = 'http://localhost:8080/user';
+
+    _data: Observable<User[]>;
 
     constructor(private http: Http) { }
 
-    getUserById(id: Number): Observable<any> {
-        
-        if (!this._user) {
-            this._user = this.http.get('http://localhost:8080/user/show/' + id)
-                .map((res: Response) => res.json())
+
+    getList(): Observable<User[]> {
+
+        if (!this._data) {
+            this._data = this.http.get(this._userUrl + '/list')
+                .map(res => {
+                    return res.json().map(elt => {
+                        return new User(elt.id, elt.answers, elt.badges, elt.points, elt.questions, elt.username);
+                    });
+                })
                 .cache();
         }
 
-        return this._user;
+        return this._data;
     }
 
-    getList(): Observable<any> {
-        
-        if (!this._userList) {
-            this._userList = this.http.get('http://localhost:8080/user/list')
-                .map((res: Response) => res.json())
-                .cache();
-        }
-
-        return this._userList;
+    getUserById(id: Number): Observable<User> {
+        return this.getList().flatMap(x => x).find(u => {
+            return u.id == id;
+        });
     }
 }

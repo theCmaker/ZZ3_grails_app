@@ -1,5 +1,3 @@
-import { UserService } from '../user/user.service'
-
 export class Question {
 
     id: number;
@@ -33,12 +31,6 @@ export class Question {
     
     getScore(): number {
         return this.upVoters.length - this.downVoters.length
-    }
-    
-    getUser(): any {
-        // @TODO : create a user instance
-
-        
     }
 
 }

@@ -1,17 +1,17 @@
 export class User {
 
     id: number;
-    answers: Array<Number>;
-    badges: Array<Number>;
+    answers: Array<number>;
+    badges: Array<number>;
     points: number;
-    questions: Array<Number>;
+    questions: Array<number>;
     username: string;
 
     constructor(id: number,
-        answers: Array<Number>,
-        badges: Array<Number>,
+        answers: Array<number>,
+        badges: Array<number>,
         points: number,
-        questions: Array<Number>,
+        questions: Array<number>,
         username: string
     ) {
         this.id = id;

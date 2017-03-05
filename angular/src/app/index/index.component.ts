@@ -29,69 +29,20 @@ export class IndexComponent implements OnInit {
 
     this.questionsList = new Array<Question>();
     this.usersList = new Array<User>();
-    
+
   }
 
   ngOnInit(): void {
     this.userService.getList().subscribe(res => {
-
-      res.forEach( (val, idx, arr) => {
-        this.usersList.push(
-          new User(
-            val.id,
-            val.answers,
-            val.points,
-            val.badges,
-            val.questions,
-            val.username
-          )
-        );
-      });
-      
-      console.log('user list')
-      console.log(this.usersList)
-
+      this.usersList = res;
     });
+
     // Getting all the entities
     this.questionService.getList().subscribe(res => {
-      // TODO : create Question instances, create user instances, store answers, change template and input the question in the vote component
-      /*
-      res.forEach((val, idx, arr) => {
-
-        this.questionsList.push(
-          new Question(
-            val.id,
-            val.title,
-            val.content,
-            val.answers,
-            val.date,
-            val.downVoters,
-            val.upvoters,
-            val.user.id
-          )
-        );
-        */
       this.questionsList = res;
-      });
-
-      console.log('questionsList');
-      console.log(this.questionsList);
-    }
-
-  getUserById(id: number): User {
-    id = id - 1; // because
-    console.log('user id');
-    console.log(id);
-    console.log(this.usersList[id]);
-
-    
-
-    return this.usersList.find((user, idx, obj) => {
-      return user.id == id
     });
-  }
 
-  
+  }
 
   hasRoute(controllerName: string): boolean {
     return this.router.config.some((route: Route) => {
