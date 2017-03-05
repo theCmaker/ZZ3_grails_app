@@ -1,22 +1,37 @@
-import {Component} from '@angular/core';
-import {QuestionService} from './question.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Location } from '@angular/common';
 
+import 'rxjs/add/operator/switchMap';
+
+import {QuestionService} from './question.service';
+import { Question } from './question';
 
 @Component({
   selector: 'question',
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.css']
 })
-export class QuestionComponent {
+  
+export class QuestionComponent implements OnInit {
 
-  applicationData: any;
 
-  title: string;
+  @Input() id: number;
 
-  constructor(private questionService: QuestionService) {
-    this.title = "Toto";
+  question: Question;
+
+  constructor(
+    private questionService: QuestionService,
+    private route: ActivatedRoute,
+    private location : Location
+  ) {
+    
   }
 
-  
+
+  ngOnInit(): void {
+    this.route.params
+      .switchMap((params: Params) => this.questionService.getQuestionById(+params['id'])).subscribe(res => { this.question = res });
+    }
 
 }

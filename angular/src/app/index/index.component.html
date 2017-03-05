@@ -26,8 +26,10 @@
 
       <tbody>
         <tr *ngFor="let question of questionsList">
-          <td>{{question.title}}</td>
-          <td>{{this.getUserById(question.user).username}}</td>
+          <td>
+            <a [routerLink]="['/question', question.id]">{{question.title}}</a>
+          </td>
+          <td>{{question.user}}</td>
           <td>{{question.date}}</td>
           <td> {{question.id}} </td>
         </tr>

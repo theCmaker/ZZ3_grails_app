@@ -55,7 +55,7 @@ export class IndexComponent implements OnInit {
     // Getting all the entities
     this.questionService.getList().subscribe(res => {
       // TODO : create Question instances, create user instances, store answers, change template and input the question in the vote component
-
+      /*
       res.forEach((val, idx, arr) => {
 
         this.questionsList.push(
@@ -70,14 +70,13 @@ export class IndexComponent implements OnInit {
             val.user.id
           )
         );
-        
+        */
+      this.questionsList = res;
       });
 
       console.log('questionsList');
       console.log(this.questionsList);
-    });
-
-  }
+    }
 
   getUserById(id: number): User {
     id = id - 1; // because
