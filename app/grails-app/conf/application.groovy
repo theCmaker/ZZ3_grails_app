@@ -15,7 +15,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/error',          access: ['permitAll']],
 	[pattern: '/index',          access: ['permitAll']],
 	[pattern: '/index.gsp',      access: ['permitAll']],
-	[pattern: '/unavailable',          access: ['permitAll']],
+	[pattern: '/unavailable',    access: ['permitAll']],
 	[pattern: '/shutdown',       access: ['permitAll']],
 	[pattern: '/assets/**',      access: ['permitAll']],
 	[pattern: '/**/js/**',       access: ['permitAll']],
@@ -27,7 +27,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/dbconsole', 	 access: ['permitAll']],
 	[pattern: '/dbconsole/**', 	 access: ['permitAll']],
 	[pattern: '/fonts',			 access: ['permitAll']],
-	[pattern: '/fonts/**',		 access: ['permitAll']]
+	[pattern: '/fonts/**',		 access: ['permitAll']],
+	[pattern: '/health',		 access: ['permitAll']]
 ]
 
 grails.plugin.springsecurity.filterChain.chainMap = [
