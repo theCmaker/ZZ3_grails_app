@@ -1,22 +1,38 @@
 # ZZ3_grails_app
 ZZ3 project on Grails to create a stackoverflow-like. A gamification will be in place to reward users.
 
+## Folder structure
 
-## Expected features
-* The project will offer a system to ask and answer questions.
-* An answer can be upvoted. It means it's the more accurate answer for the question. Of course, they can also be downvoted.
-* The answers will be ordered by number of votes, this feature should be a matter of presentation.
-* Questions can also be voted to reflect their interests in the community.
-* A question can be tagged to appear in categories.
-* A question or an answer can be edited to add some additional information or to fix a typo.
-* A reputation mechanism brings a gamification to the application (The rules have to be defined).
-* Some actions (to be defined) will allow the user to gain some badges (part of the gamification).
-* Users can fill a profile.
-* The profile will sum up all the user's actions (questions asked, answers given, edits, ...) and the earned reputation.
-* The profile will compute the grand total
+The structure is the following :
+* angular : the code for the client side of the app
+* app : the code for the 'api' side of the app, in grails
+* docs : specification documents, uml and usefull documents
 
-## Organization
+### Angular
 
-The project is organized in different folders :
-* **app** : contains the grails project to deploy and use the app,
-* **docs** : contains all the analysis documents.
+This folder contains the `Angular2` code of the client.
+Several components and services have been created to limit code duplication.
+
+### App
+
+This part concerns the `Grails` app. We tend to use this as an API to interact with the different mechanisms of the app. It allows to fetch and save data. It also allows to do the same actions as in the fist part of the project.
+
+## How to use ?
+
+To use this project, you will first need to run the `Grails` server.
+To do so, make sure you have the Grails CLI with at least the following versions (`grails -v`) :
+* Grails Version: 3.2.3
+* Groovy Version: 2.4.7
+* JVM Version: 1.8
+
+Once this is checked, go to the `app` folder and run `grails run-app`. This will start the server side.
+
+Then, go back on root folder and go to the `angular` folder.
+Make sure `node` (v5.0 at least) and `npm` (v3.0 at least) are installed.
+
+Some npm packages will need to be installed globally (`npm install -g <package>`):
+C:\Users\bbs-0\AppData\Roaming\npm
+* angular-cli
+* typescript
+
+When this is done, use the command `npm install` in the `angular` folder to install the dependancies, then start the server using `npm start`. When a message says that the server is ready, you can now use the app in your browser at [http://localhost:4200/]().
