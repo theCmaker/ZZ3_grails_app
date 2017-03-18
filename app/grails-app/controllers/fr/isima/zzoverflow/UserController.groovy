@@ -8,6 +8,10 @@ import grails.plugin.springsecurity.annotation.*
 
 @Transactional(readOnly = true)
 class UserController {
+    static responseFormats = [
+        'json',
+        'xml'
+    ]
 
     def springSecurityService
 
@@ -17,6 +21,11 @@ class UserController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond User.list(params), model:[userCount: User.count()]
+    }
+
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+    def list() {
+        respond User.list()
     }
 
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
@@ -45,7 +54,7 @@ class UserController {
 
             if (user == null) {
                 transactionStatus.setRollbackOnly()
-                notFound()
+                render status: NOT_FOUND
                 return
             } 
 
@@ -84,7 +93,7 @@ class UserController {
     def update(User user) {
         if (user == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -111,7 +120,7 @@ class UserController {
 
         if (user == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -126,14 +135,4 @@ class UserController {
         }
     }
 
-    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
 }

@@ -8,6 +8,10 @@ import grails.plugin.springsecurity.annotation.*
 
 @Transactional(readOnly = true)
 class AnswerController {
+    static responseFormats = [
+        'json',
+        'xml'
+    ]
 
     def springSecurityService
 
@@ -16,6 +20,11 @@ class AnswerController {
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def show(Answer answer) {
         respond answer, view: '_show'
+    }
+
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+    def list() {
+        respond Answer.list()
     }
 
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
@@ -53,7 +62,7 @@ class AnswerController {
 
             if (answer == null) {
                 transactionStatus.setRollbackOnly()
-                notFound()
+                render status: NOT_FOUND
                 return
             }
 
@@ -95,7 +104,7 @@ class AnswerController {
     def update(Answer answer) {
         if (answer == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -115,7 +124,7 @@ class AnswerController {
 
         if (answer == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -136,7 +145,7 @@ class AnswerController {
     def accept(Answer answer) {
 
         if (answer == null) {
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -161,7 +170,7 @@ class AnswerController {
     def revoke(Answer answer) {
 
         if (answer == null) {
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -176,7 +185,7 @@ class AnswerController {
     def vote(Answer answer) {
 
         if(null == answer) {
-            notFound();
+            render status: NOT_FOUND;
             return
         }
 
@@ -198,7 +207,7 @@ class AnswerController {
         if(Feature.findByFeature(Features.ANSWER_VOTE).enabled) {
 
             if (answer == null) {
-                notFound()
+                render status: NOT_FOUND
                 return
             }
 
@@ -229,7 +238,7 @@ class AnswerController {
         if(Feature.findByFeature(Features.ANSWER_VOTE).enabled) {
 
             if (answer == null) {
-                notFound()
+                render status: NOT_FOUND
                 return
             }
 
@@ -252,14 +261,4 @@ class AnswerController {
         }
     }
 
-    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'answer.label', default: 'Answer'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
 }

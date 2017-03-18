@@ -3,14 +3,26 @@ package fr.isima.zzoverflow
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+import grails.plugin.springsecurity.*
+import grails.plugin.springsecurity.annotation.*
+
 @Transactional(readOnly = true)
 class KeywordController {
+    static responseFormats = [
+        'json',
+        'xml'
+    ]
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Keyword.list(params), model:[keywordCount: Keyword.count()]
+    }
+
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+    def list() {
+        respond Keyword.list()
     }
 
     def show(Keyword keyword) {
@@ -25,7 +37,7 @@ class KeywordController {
     def save(Keyword keyword) {
         if (keyword == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -54,7 +66,7 @@ class KeywordController {
     def update(Keyword keyword) {
         if (keyword == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -80,7 +92,7 @@ class KeywordController {
 
         if (keyword == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -95,13 +107,4 @@ class KeywordController {
         }
     }
 
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'keyword.label', default: 'Keyword'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
 }

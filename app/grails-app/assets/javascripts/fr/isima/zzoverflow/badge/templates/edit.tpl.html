@@ -1,0 +1,21 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a ui-sref="index" class="home">Home</a></li>
+        <li><a ui-sref="badge.list" class="list">Badge List</a></li>
+    </ul>
+</div>
+<div id="edit-badge" class="content scaffold-edit" role="main">
+    <h1>Edit Badge</h1>
+    <ul class="errors" role="alert" ng-if="vm.errors">
+        <li ng-repeat="error in vm.errors">{{error.message}}</li>
+    </ul>
+
+    <form name="updateBadge" ng-submit="vm.updateBadge()">
+        <fieldset class="form">
+            <ng-include src="'/fr/isima/zzoverflow/badge/form.html'"></ng-include>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" value="Update" />
+        </fieldset>
+    </form>
+</div>

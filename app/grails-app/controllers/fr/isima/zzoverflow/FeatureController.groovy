@@ -7,6 +7,10 @@ import grails.plugin.springsecurity.*
 import grails.plugin.springsecurity.annotation.*
 
 class FeatureController {
+    static responseFormats = [
+        'json',
+        'xml'
+    ]
 
 	def springSecurityService
 
@@ -16,6 +20,11 @@ class FeatureController {
     def index() {
 
         respond Feature.list(params)
+    }
+
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+    def list() {
+        respond Feature.list()
     }
 
     @Transactional

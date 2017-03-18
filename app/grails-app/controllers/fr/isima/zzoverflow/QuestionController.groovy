@@ -8,6 +8,10 @@ import grails.plugin.springsecurity.annotation.*
 
 @Transactional(readOnly = true)
 class QuestionController {
+    static responseFormats = [
+        'json',
+        'xml'
+    ]
 
     def springSecurityService
 
@@ -17,6 +21,12 @@ class QuestionController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Question.list(params), model:[questionCount: Question.count()], view: '_index'
+    }
+
+
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+    def list() {
+        respond Question.list(), model:[questions: Question.list()], view: '_summary'
     }
 
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
@@ -56,7 +66,7 @@ class QuestionController {
 
             if (question == null) {
                 transactionStatus.setRollbackOnly()
-                notFound()
+                render status: NOT_FOUND
                 return
             }
 
@@ -99,7 +109,7 @@ class QuestionController {
     def update(Question question) {
         if (question == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -126,7 +136,7 @@ class QuestionController {
 
         if (question == null) {
             transactionStatus.setRollbackOnly()
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -146,7 +156,7 @@ class QuestionController {
     def vote(Question question) {
 
         if(null == question) {
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
@@ -170,7 +180,7 @@ class QuestionController {
         if(Feature.findByFeature(Features.QUESTION_VOTE).enabled) {
 
             if (question == null) {
-                notFound()
+                render status: NOT_FOUND
                 return
             }
 
@@ -201,7 +211,7 @@ class QuestionController {
         if(Feature.findByFeature(Features.QUESTION_VOTE)) {
 
             if (question == null) {
-                notFound()
+                render status: NOT_FOUND
                 return
             }
 
@@ -224,14 +234,4 @@ class QuestionController {
         }
     }
 
-    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'question.label', default: 'Question'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
 }
