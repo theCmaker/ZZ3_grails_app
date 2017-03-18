@@ -1,1 +1,73 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+    CUSTOM STYLES
+*/
+.navbar-default, .navbar-static-top {
+    background-color: lightblue;
+}
+
+.st-menu {
+    background: lightcyan;
+}
+
+body {
+    -moz-box-shadow: 0 0 0.3em lightblue;
+    -webkit-box-shadow: 0 0 0.3em lightblue;
+    box-shadow: 0 0 0.3em lightblue;
+}
+
+.footer {
+    background: lightblue;
+}
+
+.footer a {
+    color: lightblue;
+}
+
+.nav li.dropdown.open ul.dropdown-menu {
+    background-color: lightblue;
+}
+
+th:hover, tr:hover {
+    background: lightcyan;
+}
+
+.grails-logo-container {
+    background:lightcyan no-repeat 50% 30%;
+}
+
+
+.hidden {
+    display: none;
+}
+
+.btn {
+    text-decoration: none;
+}
+
+.panel .row, .panel .row .col-xs-11, .panel .row .col-xs-1, .panel-heading .row, .panel-heading .col-xs-9, .panel-heading .col-xs-3 {
+    padding: 0px;
+}
+
+.panel .panel-heading {
+    padding: 15px;
+}
+
+.vote-section {
+    padding: 15px 0px 15px 0px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.vote-section .value {
+    font-weight: bold;
+    font-size: 1.5em;
+
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+#question-title {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
