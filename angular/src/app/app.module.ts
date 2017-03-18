@@ -8,6 +8,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 // Components
 import { rootRouterConfig } from './app.routes';
+
 import { IndexComponent } from './index/index.component';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -15,6 +16,7 @@ import { NavComponent } from './nav/nav.component';
 import { AnswerComponent } from './answer/answer.component'
 import { BadgeComponent } from './badge/badge.component'
 import { FeatureComponent } from './feature/feature.component'
+import { LoginComponent } from './login/login.component'
 import { QuestionComponent } from './question/question.component'
 import { UserComponent } from './user/user.component'
 import { VoteComponent } from './vote/vote.component'
@@ -34,6 +36,7 @@ import { UserService } from './user/user.service'
     AnswerComponent,
     BadgeComponent,
     FeatureComponent,
+    LoginComponent,
     QuestionComponent,
     UserComponent,
     VoteComponent

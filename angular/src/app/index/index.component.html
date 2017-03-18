@@ -5,6 +5,7 @@
 </div>
 
 <div id="content" role="main">
+
   <section class="container colset-2-its">
     <h1 style="text-align:center;">
       Welcome to ZZoverflow
@@ -40,11 +41,6 @@
           <td>{{question.date}}</td>
           <td>
             <vote [id]="question.id" [isQuestion]="true"> </vote>
-            <!--
-            <button (click)="event-handler()">Down</button>
-            {{question.getScore()}}
-            <button (click)="onClick()">Up</button>
-            -->
           </td>
         </tr>
       </tbody>
