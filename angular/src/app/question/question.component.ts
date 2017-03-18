@@ -57,15 +57,9 @@ export class QuestionComponent implements OnInit {
 
         var createdAnswer = new Answer(undefined, this._answerContent, false, new Date(), this.question.id, this.loginService.user.id, [], []);
 
-        JSON.stringify(createdAnswer);
-        console.log("New answer to create");
-        console.log(createdAnswer);
-
-        // this.http.post()
-
         console.log("posting");
         console.log();
-        this.http.post("http://localhost:8080/answer/save/?answer:"+JSON.stringify(createdAnswer)
+        this.http.post("http://localhost:8080/answer/save/"+this.question.id+"?content="+this._answerContent
             , createdAnswer
             , {
                 headers: new Headers({

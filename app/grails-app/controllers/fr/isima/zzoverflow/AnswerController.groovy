@@ -56,10 +56,16 @@ class AnswerController {
 
     @Transactional
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
-    def save(Answer answer) {
+    def save() {
 
         if(Feature.findByFeature(Features.ANSWER_CREATE).enabled) {
 
+            Answer answer = new Answer()
+
+            bindData(answer, params, [include: 'content'])
+            answer.question = Question.get(params.id)
+            answer.user = User.get(springSecurityService.currentUser.id)
+            
             if (answer == null) {
                 transactionStatus.setRollbackOnly()
                 render status: NOT_FOUND
@@ -69,7 +75,6 @@ class AnswerController {
             if (answer.user.answers != null && answer.user.answers.size() == 4) {
                 def badge = new Badge(name: "talkative", user: answer.user).save()
             }
-
 
             // Setting the date when we save
             answer.date = new Date()
@@ -84,7 +89,7 @@ class AnswerController {
             answer.save(flush:true, failOnError: true)
             
             // Redirect to the question show view
-            redirect action:'show', controller: 'question', method: 'GET', params: [id: answer.question.id]
+            // redirect action:'show', controller: 'question', method: 'GET', params: [id: answer.question.id]
         } else {
 
             render status: SERVICE_UNAVAILABLE
