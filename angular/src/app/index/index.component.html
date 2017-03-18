@@ -5,6 +5,7 @@
 </div>
 
 <div id="content" role="main">
+
   <section class="container colset-2-its">
     <h1 style="text-align:center;">
       Welcome to ZZoverflow
@@ -14,9 +15,11 @@
       You can ask anything. Except a Million $...
     </p>
 
+    <button (click)="newQuestion()" class="btn btn-primary">Create a new Question</button>
+    
 
     <!--Displaying the questions in a table-->
-    <table class="table">
+    <table class="table table-striped">
       <thead>
         <th>Title</th>
         <th>User</th>
@@ -40,11 +43,6 @@
           <td>{{question.date}}</td>
           <td>
             <vote [id]="question.id" [isQuestion]="true"> </vote>
-            <!--
-            <button (click)="event-handler()">Down</button>
-            {{question.getScore()}}
-            <button (click)="onClick()">Up</button>
-            -->
           </td>
         </tr>
       </tbody>

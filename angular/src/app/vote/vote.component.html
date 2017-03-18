@@ -1,19 +1,15 @@
-<div>
-    <div>
-        <button (click)="upVote()">
+<div class="text-center vote-section">
+        <button (click)="upVote()" class="btn btn-primary btn-block">
             +
         </button>
-        
-    </div>
 
-    <div>
-        {{getScore()}}
-    </div>
+        <div class="value">
+            {{getScore()}}
+        </div>
 
-    <div>
-        <button (click)="downVote()">
+        <button (click)="downVote()" class="btn btn-primary btn-block">
             -
+            <!--<i class="glyphicon glyphicon-thumbs-down"></i>-->
         </button>
         
-    </div>
 </div>

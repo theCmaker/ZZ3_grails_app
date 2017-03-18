@@ -40,4 +40,13 @@ export class UserService {
             return u.id == id;
         });
     }
+
+    getUserByName(name: string): Observable<User> {
+        console.log("name");
+        console.log(name);
+        
+        return this.getList().flatMap(x => x).find(u => {
+            return u.username == name;
+        });
+    }
 }
