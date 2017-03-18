@@ -18,7 +18,10 @@ import { Observable } from 'rxjs';
 export class LoginComponent {
 
     _loginUrl: string = 'http://localhost:8080/login';
-    _response: Observable<any>;
+
+    _username: string;
+    _roles: Array<string>;
+    _token: string;
 
     username: string;
     password: string;
@@ -44,6 +47,16 @@ export class LoginComponent {
             this.http.post(this._loginUrl, jsonLogin).subscribe(res => {
                 console.log("response");
                 console.log(res);
+
+                var parsed = res.json();
+
+                this._token = parsed.access_token;
+                this._username = parsed.username;
+                this._roles = parsed.roles;
+                
+                console.log(this);
+                
+                
             });
 
         }
