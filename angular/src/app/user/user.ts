@@ -1,5 +1,6 @@
 export class User {
 
+    // Required for creation    
     id: number;
     answers: Array<number>;
     badges: Array<number>;

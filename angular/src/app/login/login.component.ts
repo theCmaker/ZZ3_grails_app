@@ -8,6 +8,9 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs';
 
+import { UserService } from '../user/user.service';
+import { User } from '../user/user';
+
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
@@ -18,22 +21,27 @@ import { Observable } from 'rxjs';
 export class LoginComponent {
 
     _loginUrl: string = 'http://localhost:8080/login';
+    
+    // Used for content management and acces
+    _roles: Array<string> = undefined;
+    _token: string = undefined;
 
-    _username: string;
-    _roles: Array<string>;
-    _token: string;
+    // Used for displaying and requests
+    user: User;
 
-    username: string;
-    password: string;
+    // Form fields
+    username: string = "";
+    password: string = "";
 
     constructor(
-        private http: Http
+        private http: Http,
+        private userService : UserService
     ) {
-        this.username = "";
-        this.password = "";
     }
 
-    submitLogin() {
+    login() {
+        console.log("login");
+        
         if ("" != this.username && "" != this.username) {
 
             // JSON to send and authenticate
@@ -48,18 +56,29 @@ export class LoginComponent {
                 console.log("response");
                 console.log(res);
 
+                // Parse the json response
                 var parsed = res.json();
 
                 this._token = parsed.access_token;
-                this._username = parsed.username;
                 this._roles = parsed.roles;
+
+                // Recover the user instance from its name
+                this.userService.getUserByName(parsed.username).subscribe(res => {
+                    this.user = res;
+                });
+
                 
                 console.log(this);
-                
                 
             });
 
         }
+    }
+
+    isLoggedIn(): boolean {
+        
+        return undefined != this._token;
+
     }
 
 }
