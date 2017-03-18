@@ -27,6 +27,7 @@ import { BadgeService } from './badge/badge.service'
 import { FeatureService } from './feature/feature.service'
 import { QuestionService } from './question/question.service'
 import { UserService } from './user/user.service'
+import { LoginService } from './login/login.service';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { UserService } from './user/user.service'
     AnswerService,
     BadgeService,
     FeatureService,
+    LoginService,
     QuestionService,
     UserService],
   bootstrap: [AppComponent]
