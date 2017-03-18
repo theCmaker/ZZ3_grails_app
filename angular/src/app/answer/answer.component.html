@@ -1,6 +1,42 @@
-{{answer.content}}
-{{answer.accepted}}
-{{answer.date}}
-{{answer.user}}
 <!--Vote for the answer-->
-<vote [id]="answer.id"></vote>
+<!--<vote [id]="answer.id"></vote>-->
+
+<div class="panel panel-info" [class.panel-success]="answer.accepted">
+    <div class="panel-heading row">
+        <div class="col-xs-11">
+            {{answer.content}}
+        </div>
+        <div class="col-xs-1">
+            <vote [id]="answer.id"> </vote>
+        </div>
+    </div>
+
+    <div class="panel-footer row">
+        <div class="col-xs-4 text-left">
+            {{answer.user}}
+        </div>
+
+        <div class="col-xs-4 text-center">
+            <form id=deleteAnswer (ngSubmit)="deleteAnswer()" #refForm="ngForm">
+                <div class="btn-group">
+                    
+                    <!-- if admin ou createur -->
+                    <button (click)="editAnswer()" class="btn btn-primary">Edit</button>
+
+                    <!-- if admin ou createur -->
+                    <div *ngIf="answer.accepted">
+                        <button (click)="revokeAnswer()" class="btn btn-danger">Revoke</button>
+                    </div>
+                    <div *ngIf="!answer.accepted">
+                        <button (click)="acceptAnswer()" class="btn btn-success">Accept</button>
+                    </div>
+                    
+                    <!-- if admin ou createur -->
+                    <button (click)="deleteAnswer()" class="btn btn-danger">delete</button>
+                    
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

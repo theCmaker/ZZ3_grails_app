@@ -17,8 +17,7 @@
 <!--New answer to create-->
 <form id=formId (ngSubmit)="createAnswer()" #refForm="ngForm">
     <div>
-        <label for="content">Content</label>
-        <textarea name="content" rows="4" placeholder="Answer here..."></textarea>
+        <textarea name="content" rows="4" cols="120" placeholder="Answer here..." [(ngModel)]="_answerContent"></textarea>
     </div>
 
     <button name="create" class="btn btn-success">Answer</button>

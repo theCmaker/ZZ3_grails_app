@@ -41,8 +41,20 @@ class BootStrap {
         assert Role.count() == 2
         assert Group.count() == 2
 
-        new Question(title:'This is a question', content:'To be or not to be?', user: normalUser, date: new Date()).save(flush: true)
+        def q = new Question(title:'This is a question', content:'To be or not to be?', user: normalUser, date: new Date())
+        q.save(flush: true)
+
         new Question(title:'Another question', content:'Why is this?', user: benjiUser, date: new Date()).save(flush: true)
+
+        new Answer(
+            accepted:false,
+            content:"This is a proper answer to test",
+            date: new Date(),
+            upVoters: [],
+            downVoters: [],
+            question: q,
+            user: benjiUser
+        ).save(flush: true)
 
 
     }

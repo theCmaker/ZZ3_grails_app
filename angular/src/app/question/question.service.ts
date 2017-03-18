@@ -22,11 +22,15 @@ export class QuestionService {
             this._data = this.http.get(this._questionUrl + '/list')
                 .map(res => {
                     return res.json().map(elt => {
+                        elt.answers.forEach((v, i, a) => { a[i] = v.id }); // [{id:1}] -> [1]
                         return new Question(elt.id, elt.title, elt.content, elt.answers, elt.date, elt.downVoters, elt.upVoters, elt.user.id);
                     });
                 })
                 .cache();
         }
+
+        [].forEach( (v, i, a) => { a[i]=v.id } )
+
         return this._data
     }
 
