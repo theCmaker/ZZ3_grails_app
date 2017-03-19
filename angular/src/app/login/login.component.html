@@ -1,0 +1,22 @@
+<!--TODO:
+If logged in -> logout
+else -> login
+register button :
+    Register view with all needed for it
+    add in route
+    make a link after the sign in like a button
+
+-->
+
+<div *ngIf="loginService.isLoggedIn()">
+    Logged in as {{loginService.user.username}}
+</div>
+<div *ngIf="!loginService.isLoggedIn()">
+    <form id=loginForm (ngSubmit)="login()" #refForm="ngForm">
+        <div>
+            <input type="text" name="username" value="" placeholder="Username" [(ngModel)]="username" class="input">
+            <input type="password" name="password" value="" placeholder="Password" [(ngModel)]="password" class="input">
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </div>
+    </form>
+</div>

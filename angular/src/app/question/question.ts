@@ -3,20 +3,20 @@ export class Question {
     id: number;
     title: string;
     content: string;
-    answers: Array<Number>;
+    answers: Array<number>;
     date: Date;
-    downVoters: Array<Number>;
-    upVoters: Array<Number>;
+    downVoters: Array<number>;
+    upVoters: Array<number>;
     user: number;
 
     constructor(
         id: number,
         title: string,
         content: string,
-        answers: Array<Number>,
+        answers: Array<number>,
         date: Date,
-        downVoters: Array<Number>,
-        upVoters: Array<Number>,
+        downVoters: Array<number>,
+        upVoters: Array<number>,
         user: number
     ) {
         this.id = id;

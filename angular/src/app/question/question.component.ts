@@ -2,13 +2,23 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
+
 import 'rxjs/add/operator/switchMap';
+
+import { Answer } from '../answer/answer';
 
 import { QuestionService } from './question.service';
 import { Question } from './question';
 
 import { VoteComponent } from '../vote/vote.component'
 import { AnswerComponent } from '../answer/answer.component';
+
+import { LoginService } from '../login/login.service';
+
+/* for testing */
+import { Http, Response, Headers } from '@angular/http';
+import 'rxjs/Rx';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'question',
@@ -24,10 +34,14 @@ export class QuestionComponent implements OnInit {
 
     question: Question;
 
+    _answerContent: string = "";
+
     constructor(
+        public loginService: LoginService,
         private questionService: QuestionService,
         private route: ActivatedRoute,
-        private location: Location
+        private location: Location,
+        private http: Http
     ) {
 
     }
@@ -40,6 +54,24 @@ export class QuestionComponent implements OnInit {
 
     createAnswer(): void {
         console.log("create answer");
+
+        var createdAnswer = new Answer(undefined, this._answerContent, false, new Date(), this.question.id, this.loginService.user.id, [], []);
+
+        console.log("posting");
+        console.log();
+        this.http.post("http://localhost:8080/answer/save/"+this.question.id+"?content="+this._answerContent
+            , createdAnswer
+            , {
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + this.loginService._token
+                }),
+                
+            })
+            .subscribe(res => {
+                console.log("response");
+                console.log(res);
+            });
+
     }
 
 }
