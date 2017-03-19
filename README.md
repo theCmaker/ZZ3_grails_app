@@ -1,4 +1,5 @@
 # ZZ3_grails_app
+
 ZZ3 project on Grails to create a stackoverflow-like. A gamification will be in place to reward users.
 
 ## Folder structure
@@ -16,6 +17,11 @@ Several components and services have been created to limit code duplication.
 ### App
 
 This part concerns the `Grails` app. We tend to use this as an API to interact with the different mechanisms of the app. It allows to fetch and save data. It also allows to do the same actions as in the fist part of the project.
+All actions from the first part of the project are not working. This is still a work is progress, but the folowwing mechanisms are in place (making all the features working is a matter of time) :
+* stateless login, using JWT method
+* health check url : http://localhost:8080/health
+* feature flipping : http://localhost:8080/feature, this enables to turn on or off some features in the app (such as answering questions, creating accounts, vote, etc...). This is only available for admin users
+* a stateless angular client is also available
 
 ## How to use ?
 
