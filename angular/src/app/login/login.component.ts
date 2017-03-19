@@ -37,11 +37,9 @@ export class LoginComponent {
 
         console.log("login");
 
-        if ("" != this.username && "" != this.username) {
+        if ("" != this.username && "" != this.password) {
             this.loginService.login(this.username, this.password);
         }
-
-        console.log(this);
 
     }
 

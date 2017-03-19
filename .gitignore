@@ -34,3 +34,4 @@
 
 # vscode preferences
 .vscode
+/angular/nbproject/private/

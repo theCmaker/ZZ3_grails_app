@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
-
 import 'rxjs/add/operator/switchMap';
 
 import { Answer } from '../answer/answer';
@@ -53,12 +52,9 @@ export class QuestionComponent implements OnInit {
     }
 
     createAnswer(): void {
-        console.log("create answer");
-
         var createdAnswer = new Answer(undefined, this._answerContent, false, new Date(), this.question.id, this.loginService.user.id, [], []);
 
         console.log("posting");
-        console.log();
         this.http.post("http://localhost:8080/answer/save/"+this.question.id+"?content="+this._answerContent
             , createdAnswer
             , {

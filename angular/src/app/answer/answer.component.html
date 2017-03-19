@@ -1,5 +1,3 @@
-<!--Vote for the answer-->
-<!--<vote [id]="answer.id"></vote>-->
 
 <div class="panel panel-info" [class.panel-success]="answer.accepted">
     <div class="panel-heading row">
@@ -13,26 +11,22 @@
 
     <div class="panel-footer row">
         <div class="col-xs-4 text-left">
-            {{answer.user}}
+            {{username}}
         </div>
 
         <div class="col-xs-4 text-center">
-            <form id=deleteAnswer (ngSubmit)="deleteAnswer()" #refForm="ngForm">
+            <form id="deleteAnswer" (ngSubmit)="deleteAnswer()" #refForm="ngForm">
                 <div class="btn-group">
                     
                     <!-- if admin ou createur -->
                     <button (click)="editAnswer()" class="btn btn-primary">Edit</button>
 
                     <!-- if admin ou createur -->
-                    <div *ngIf="answer.accepted">
-                        <button (click)="revokeAnswer()" class="btn btn-danger">Revoke</button>
-                    </div>
-                    <div *ngIf="!answer.accepted">
-                        <button (click)="acceptAnswer()" class="btn btn-success">Accept</button>
-                    </div>
+                    <button *ngIf="answer.accepted" (click)="revokeAnswer()" class="btn btn-danger">Revoke</button>
+                    <button *ngIf="!answer.accepted" (click)="acceptAnswer()" class="btn btn-success">Accept</button>
                     
                     <!-- if admin ou createur -->
-                    <button (click)="deleteAnswer()" class="btn btn-danger">delete</button>
+                    <button (click)="deleteAnswer()" class="btn btn-danger">Delete</button>
                     
 
                 </div>

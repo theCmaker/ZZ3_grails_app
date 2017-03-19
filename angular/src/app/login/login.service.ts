@@ -10,7 +10,7 @@ import { User } from '../user/user';
 @Injectable()
 export class LoginService {
 
-    _loginUrl: string = 'http://localhost:8080/login';
+    _loginUrl: string = 'http://localhost:8080/api/login';
 
     // Used for content management and acces
     _roles: Array<string> = undefined;
@@ -34,8 +34,6 @@ export class LoginService {
             "password": password
         };
 
-        console.log(jsonLogin);
-
         this.http.post(this._loginUrl, jsonLogin).subscribe(res => {
 
             if (200 == res.status) {
@@ -58,7 +56,7 @@ export class LoginService {
 
             } else {
 
-                this._loggedIn = true;
+                this._loggedIn = false;
                 // Display an error or idk...
             }
         });

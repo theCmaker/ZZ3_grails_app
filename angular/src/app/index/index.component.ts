@@ -30,10 +30,13 @@ export class IndexComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.usersList = [];
     this.userService.getList().subscribe(res => {
       this.usersList = res;
     });
 
+
+    this.questionsList = [];
     this.questionService.getList().subscribe(res => {
       this.questionsList = res;
     });

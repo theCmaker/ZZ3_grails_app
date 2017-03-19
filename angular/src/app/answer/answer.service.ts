@@ -3,6 +3,8 @@ import { Http, Response } from '@angular/http';
 
 import { Answer } from './answer';
 
+import 'rxjs/add/operator/cache';
+import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs';
 
@@ -11,36 +13,35 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class AnswerService {
 
-    _answerUrl = 'http://localhost:8080/answer';
+    _answerUrl: string = 'http://localhost:8080/answer';
 
     _data: Observable<Answer[]>;
 
     constructor(private http: Http) { }
 
     getList(): Observable<Answer[]> {
-        console.log("in answer get list");
         
         if (!this._data) {
             this._data = this.http.get(this._answerUrl + '/list')
-                .map(res => {
+            .map(res => {
                     return res.json().map(elt => {
-                        console.log(
-                            elt.id, elt.content, elt.accepted, elt.date, elt.question, elt.user.id, elt.upVoters, elt.downVoters
-                        );
-                        
                         return new Answer(elt.id, elt.content, elt.accepted, elt.date, elt.question, elt.user.id, elt.upVoters, elt.downVoters);
                     });
-                }).
-                cache();
+                })
+            .cache();
         }
         return this._data;
     }
 
+    private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
+    }
+
     getAnswerById(id: number): Observable<Answer> {
-        console.log("In answer get id");
-        
-        return this.getList().flatMap(x => x).find(a => {
+        var data = this.getList().flatMap(x => x).find(a => {
             return a.id == id;
         });
+        return data;
     }
 }

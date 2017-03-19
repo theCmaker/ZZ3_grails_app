@@ -29,7 +29,7 @@ export class QuestionService {
                 .cache();
         }
 
-        [].forEach( (v, i, a) => { a[i]=v.id } )
+        //[].forEach( (v, i, a) => { a[i]=v.id } )
 
         return this._data
     }

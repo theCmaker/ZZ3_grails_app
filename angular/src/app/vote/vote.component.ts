@@ -13,7 +13,7 @@ import { Answer } from '../answer/answer'
 @Component({
     selector: 'vote',
     templateUrl: 'vote.component.html',
-    styleUrls: ['./vote.component.css'],
+    styleUrls: ['./vote.component.css']
 })
 
 export class VoteComponent implements OnInit {
@@ -34,27 +34,36 @@ export class VoteComponent implements OnInit {
     ngOnInit() {
 
         //Fetching from answers or questions
-        console.log("vote component for question " + this.isQuestion);
 
         if (this.isQuestion) {
+            this.entity = new Question(this.id, "question title", "question content", [], new Date(), [], [], undefined);
             this.questionService.getQuestionById(this.id).subscribe(res => { this.entity = res; });
             
         } else {
+            this.entity = new Answer(this.id, "Fetching content...", false, new Date(), undefined, undefined, [], []);
             this.answerService.getAnswerById(this.id).subscribe(res => { this.entity = res; });
 
         }
     }
 
     getScore(): number {
-        return this.entity.getScore();
+        if (this.entity) {
+            return this.entity.getScore();
+        } else {
+            return 0;
+        }
     }
 
     upVote(): void {
-        console.log("up");
+        if (this.entity) {
+            console.log("up");
+        }
     }
 
     downVote(): void {
-        console.log("down");
+        if (this.entity) {
+            console.log("down");
+        }
     }
 
 }

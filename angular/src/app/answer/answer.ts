@@ -32,7 +32,7 @@ export class Answer {
         this.downVoters = downVoters;
 
     }
-
+    
     getScore(): number {
         return this.upVoters.length - this.downVoters.length;
     }
