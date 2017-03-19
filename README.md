@@ -37,8 +37,16 @@ Then, go back on root folder and go to the `angular` folder.
 Make sure `node` (v5.0 at least) and `npm` (v3.0 at least) are installed.
 
 Some npm packages will need to be installed globally (`npm install -g <package>`):
-C:\Users\bbs-0\AppData\Roaming\npm
-* angular-cli
-* typescript
+* @angular/cli@1.0.0-rc.2
+* @angular/compiler@2.3.1
+* @angular/compiler-cli@2.3.1
+* @angular/core@2.3.1
+* @types/jasmine@2.5.41
+* angular-core@0.0.5
+* npm@3.10.10
+* rxjs@5.0.0-rc.4
+* typescript@2.0.2
+* watchman@0.1.8
+* webpack@2.2.1
 
 When this is done, use the command `npm install` in the `angular` folder to install the dependancies, then start the server using `npm start`. When a message says that the server is ready, you can now use the app in your browser at [http://localhost:4200/]().
