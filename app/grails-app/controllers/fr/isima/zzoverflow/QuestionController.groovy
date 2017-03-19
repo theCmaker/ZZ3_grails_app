@@ -10,7 +10,7 @@ import grails.plugin.springsecurity.annotation.*
 class QuestionController {
     static responseFormats = [
         'json',
-        'xml'
+        'html'
     ]
 
     def springSecurityService
@@ -20,7 +20,10 @@ class QuestionController {
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Question.list(params), model:[questionCount: Question.count()], view: '_index'
+        withFormat {
+            'html' { respond Question.list(params), model:[questionCount: Question.count()], view: '_index' }
+            'json' { render Question.list(params) }
+        }
     }
 
 
@@ -34,7 +37,12 @@ class QuestionController {
         def auth = springSecurityService.principal
           String username = auth.username
           def authorities = auth.authorities // a Collection of GrantedAuthority
-        respond question
+
+        withFormat {
+            'html' { respond question, view: 'show' }
+            'json' { render question }
+        }
+        //respond question
     }
     
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
@@ -48,7 +56,10 @@ class QuestionController {
             // We get the user now
             question.user = User.get(springSecurityService.currentUser.id)
 
-            respond question, view: 'create'
+            withFormat {
+                'html' { respond question, view: 'create' }
+                'json' { render question }
+            }
 
         } else {
 
@@ -101,7 +112,10 @@ class QuestionController {
 
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def edit(Question question) {
-        respond question
+        withFormat {
+            html { respond question }
+            json { respond question }
+        }
     }
 
     @Transactional

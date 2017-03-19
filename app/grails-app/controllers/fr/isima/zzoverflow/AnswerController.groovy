@@ -10,7 +10,7 @@ import grails.plugin.springsecurity.annotation.*
 class AnswerController {
     static responseFormats = [
         'json',
-        'xml'
+        'html'
     ]
 
     def springSecurityService
@@ -45,7 +45,10 @@ class AnswerController {
             answer.user = User.get(springSecurityService.currentUser.id)
 
             // Send to the _create view
-            respond answer, view: '_create'
+            withFormat {
+                "html" { respond answer, view: '_create' }
+                "json" { respond answer }
+            }
         } else {
 
             render status: SERVICE_UNAVAILABLE
@@ -81,7 +84,10 @@ class AnswerController {
 
             if (!answer.validate()) {
                 transactionStatus.setRollbackOnly()
-                respond answer.errors, view:'_create'
+                withFormat {
+                    'html' { respond answer.errors, view:'_create' }                    
+                    'json' { respond answer.errors }
+                }
                 return
             }
 
@@ -89,7 +95,9 @@ class AnswerController {
             answer.save(flush:true, failOnError: true)
             
             // Redirect to the question show view
-            // redirect action:'show', controller: 'question', method: 'GET', params: [id: answer.question.id]
+            // withFormat {
+            //     'html' : { redirect action:'show', controller: 'question', method: 'GET', params: [id: answer.question.id] }
+            // }
         } else {
 
             render status: SERVICE_UNAVAILABLE
@@ -100,7 +108,13 @@ class AnswerController {
     // Enables the user that created it to edit the content ONLY
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def edit(Answer answer) {
-        respond answer, view: '_edit'
+
+        withFormat {
+            "html" { respond answer , view: "_edit" }
+            "json" { respond answer }
+        }
+        
+        
     }
 
     // Called to update an existing answer

@@ -9,7 +9,7 @@ import grails.plugin.springsecurity.annotation.*
 class FeatureController {
     static responseFormats = [
         'json',
-        'xml'
+        'html'
     ]
 
 	def springSecurityService
@@ -18,8 +18,10 @@ class FeatureController {
 
     @Secured(['ROLE_ADMIN'])
     def index() {
-
-        respond Feature.list(params)
+         withFormat {
+            'html' { respond Feature.list(params), view: 'index' }
+            'json' { respond Feature.list(params) }
+        }
     }
 
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
@@ -39,7 +41,7 @@ class FeatureController {
     }
 
     @Transactional
-    @Secured(['ROLE_ADMIN'])
+    // @Secured(['ROLE_ADMIN'])
     def disable(Feature feature) {
 
         feature.enabled = false

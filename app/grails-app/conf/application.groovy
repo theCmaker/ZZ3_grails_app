@@ -10,18 +10,9 @@ grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.successHandler.useReferer = true
 
 grails.plugin.springsecurity.rest.login.active = true
-grails.plugin.springsecurity.rest.login.endpointUrl = '/login' // /api/login
+grails.plugin.springsecurity.rest.login.endpointUrl = '/api/login' // /api/login
 grails.plugin.springsecurity.rest.login.failureStatusCode=401
 grails.plugin.springsecurity.rest.token.validation.enableAnonymousAccess = true
-
-
-grails.plugin.springsecurity.filterChain.chainMap = [
-	// Stateless
-	[
-		pattern: '/**',
-		filters: 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter'
-	]
-]
 
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
@@ -37,10 +28,22 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/**/favicon.ico', access: ['permitAll']],
 	[pattern: '/logout', 		 access: ['permitAll']],
 	[pattern: '/logout/**', 	 access: ['permitAll']],
+	[pattern: '/login', 		 access: ['permitAll']],
+	[pattern: '/login/**', 		 access: ['permitAll']],
 	[pattern: '/dbconsole', 	 access: ['permitAll']],
 	[pattern: '/dbconsole/**', 	 access: ['permitAll']],
 	[pattern: '/fonts',			 access: ['permitAll']],
 	[pattern: '/fonts/**',		 access: ['permitAll']],
-	[pattern: '/health',		 access: ['permitAll']]
+	[pattern: '/health',		 access: ['permitAll']],
+	[pattern: '/feature',		 access: ['permitAll']],
+	[pattern: '/feature/**',	 access: ['permitAll']]
 ]
 
+grails.plugin.springsecurity.filterChain.chainMap = [
+	// Stateless
+	[
+		pattern: '/**',
+		filters: 'JOINED_FILTERS'
+	]
+	//,-authenticationProcessingFilter,-exceptionTranslationFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter'
+]
